@@ -11,6 +11,7 @@ class Home extends Component {
       <div>
         <p>Halló heimur!</p>
         <p><Link to="/login">Innskráning</Link></p>
+        <p><Link to="/books">Bækur</Link></p>
       </div>
     );
   }
