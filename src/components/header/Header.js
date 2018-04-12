@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { NavLink } from 'react-router-dom';
 
 import Button from '../button';
@@ -14,6 +13,8 @@ class Header extends Component {
   }
 
   render() {
+    const { isAuthenticated } = this.props;
+
     return (
       <header className="header">
         <h1 className="header__heading">
@@ -23,7 +24,7 @@ class Header extends Component {
         {/* ætti samt frekar heima í sér component */}
         <Button onClick={this.onClick}>Leita</Button>
 
-        <NavLink to="/login">Innskráning</NavLink>
+        { !isAuthenticated ? <NavLink to="/login">Innskráning</NavLink> : <button className="button">Logout</button>}
       </header>
     );
   }
@@ -31,7 +32,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
