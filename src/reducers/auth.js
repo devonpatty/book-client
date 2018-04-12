@@ -7,11 +7,13 @@ import {
 } from '../actions/auth';
 
 const user = JSON.parse(localStorage.getItem('user') || 'null');
+const token = JSON.parse(localStorage.getItem('token') || 'null');
 
 const initialState = {
   isFetching: false,
   isAuthenticated: user ? true : false,
   user,
+  token,
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +34,7 @@ export default (state = initialState, action) => {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
         user: action.user,
+        token: action.token,
         message: action.message,
       }
     case LOGIN_FAILURE:
@@ -48,6 +51,7 @@ export default (state = initialState, action) => {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
         user: action.user,
+        token: action.token,
       }
     default:
       return state;

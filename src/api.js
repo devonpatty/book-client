@@ -28,11 +28,10 @@ function login(username, password) {
       password, 
     })
     .then((response) => {
-      const user = {
-        username,
-        token: response.data.token,
-      };
-      return setTimeout(() => resolve({ loggedIn: true, user }), 1000);
+      const user = username;
+      const token = response.data.token;
+
+      return setTimeout(() => resolve({ loggedIn: true, user, token }), 1000);
     })
     .catch((err) => {
       if (err.response) {

@@ -21,12 +21,13 @@ function requestLogin() {
 
 /* todo fleiri action */
 
-function receiveLogin(user) {
+function receiveLogin(user, token) {
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user,
+    token,
     message: null,
   }
 }
@@ -46,6 +47,7 @@ function logout() {
     isFetching: false,
     isAuthenticated: false,
     user: null,
+    token: null,
   }
 }
 
@@ -67,9 +69,10 @@ export const loginUser = (username, password) => {
     } 
 
     if (login.loggedIn) {
-      const { user } = login;
+      const { user, token } = login;
       localStorage.setItem('user', JSON.stringify(user));
-      dispatch(receiveLogin(user));
+      localStorage.setItem('token', JSON.stringify(token));
+      dispatch(receiveLogin(user, token));
     }
   }
 }
