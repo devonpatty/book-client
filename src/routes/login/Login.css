@@ -1,0 +1,36 @@
+.login__header {
+    padding-bottom: 20px;
+}
+
+.form__login {
+    display: flex;
+    padding: 0 0 10px 0;
+}
+
+.left__form, .right__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.right__form {
+    margin-left: 30px;
+}
+
+.left__form label {
+    margin: 0 0 15px 0;
+}
+
+.right__form input {
+    font-size: 1.2em;
+    margin: 0 0 10px 0;
+}
+
+.login__button {
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #4e1d04;
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+}

@@ -31,14 +31,14 @@ function login(username, password) {
       const user = username;
       const token = response.data.token;
 
-      return setTimeout(() => resolve({ loggedIn: true, user, token }), 1000);
+      return resolve({ loggedIn: true, user, token });
     })
     .catch((err) => {
       if (err.response) {
         const {
           error,
         } = err.response.data;
-        return setTimeout(() => resolve({ loggedIn: false, error }), 500);
+        return resolve({ loggedIn: false, error });
       }
     });
   });

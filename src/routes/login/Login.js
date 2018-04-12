@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 /* todo sækja actions frá ./actions */
 import { loginUser, logoutUser } from '../../actions/auth';
@@ -56,20 +57,26 @@ class Login extends Component {
         {message && (
           <p>{message}</p>
         )}
+        
+        <h2 className="login__header">Innskráning</h2>
 
         <form onSubmit={this.handleSubmit}>
 
-          <div>
-            <label htmlFor="username">Notendanafn:</label>
-            <input id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
+          <div className="form__login">
+            <div className="left__form">
+              <label htmlFor="username">Notendanafn:</label>
+              <label htmlFor="password">Lykilorð:</label>
+            </div>
+
+            <div className="right__form">
+              <input id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
+              <input id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="password">Lykilorð:</label>
-            <input id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
-          </div>
+          <button className="login__button" disabled={isFetching}>Innskrá</button>
 
-          <button disabled={isFetching}>Innskrá</button>
+          <p><Link to='/register'>Nýskráning</Link></p>
         </form>
       </div>
     );
