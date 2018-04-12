@@ -80,6 +80,7 @@ export const loginUser = (username, password) => {
 export const logoutUser = () => {
   return async (dispatch) => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     dispatch(logout());
   }
 }
