@@ -1,3 +1,11 @@
 .header {
   background-color: #dcbe87;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+.header__homepage {
+  text-decoration: none;
 }

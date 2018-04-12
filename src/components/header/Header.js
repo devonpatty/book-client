@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import Button from '../button';
 
@@ -16,12 +16,14 @@ class Header extends Component {
   render() {
     return (
       <header className="header">
-        <h1 className="header__heading"><Link to="/">Bókasafnið</Link></h1>
+        <h1 className="header__heading">
+          <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
+        </h1>
 
         {/* ætti samt frekar heima í sér component */}
         <Button onClick={this.onClick}>Leita</Button>
 
-        <Link to="/login">Innskráning</Link>
+        <NavLink to="/login">Innskráning</NavLink>
       </header>
     );
   }
