@@ -17,8 +17,8 @@ import './App.css';
 class App extends Component {
 
   render() {
-    const authenticated = false; /* vita hvort notandi sé innskráður */
-
+    //const authenticated = true; /* vita hvort notandi sé innskráður */
+    const { isAuthenticate } = this.props;
     return (
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
@@ -29,7 +29,7 @@ class App extends Component {
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
-            <UserRoute path="/profile" authenticated={authenticated} component={Profile} />
+            <UserRoute path="/profile" authenticated={isAuthenticate} component={Profile} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>
@@ -42,6 +42,9 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   /* todo stilla redux ef það er notað */
+  return {
+    isAuthenticate: state.auth.isAuthenticate,
+  }
 }
 
 export default withRouter(connect(mapStateToProps)(App));

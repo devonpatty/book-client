@@ -16,7 +16,6 @@ function requestLogin() {
     type: LOGIN_REQUEST,
     isFetching: true,
     isAuthenticated: false,
-    message: null,
   }
 }
 
@@ -24,7 +23,7 @@ function requestLogin() {
 
 function receiveLogin(user) {
   return {
-    type: LOGIN_REQUEST,
+    type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user,
@@ -49,4 +48,35 @@ function logout() {
     user: null,
   }
 }
+
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
+
+export const loginUser = (username, password) => {
+  return async (dispatch) => {
+    dispatch(requestLogin());
+
+    let login;
+    try {
+      login = await api.login(username, password);
+    } catch (err) {
+      return dispatch(loginError(err));
+    }
+
+    if (!login.loggedIn) {
+      dispatch(loginError(login.error));
+    } 
+
+    if (login.loggedIn) {
+      const { user } = login;
+      localStorage.setItem('user', JSON.stringify(user));
+      dispatch(receiveLogin(user));
+    }
+  }
+}
+
+export const logoutUser = () => {
+  return async (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch(logout());
+  }
+}

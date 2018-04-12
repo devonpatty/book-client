@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
@@ -20,6 +21,31 @@ async function get(endpoint) {
 
 /* todo aðrar aðgerðir */
 
+function login(username, password) {
+  return new Promise((resolve, reject) => {
+    axios.post(`${baseurl}login`, { 
+      username, 
+      password, 
+    })
+    .then((response) => {
+      const user = {
+        username,
+        token: response.data.token,
+      };
+      return setTimeout(() => resolve({ loggedIn: true, user }), 1000);
+    })
+    .catch((err) => {
+      if (err.response) {
+        const {
+          error,
+        } = err.response.data;
+        return setTimeout(() => resolve({ loggedIn: false, error }), 500);
+      }
+    });
+  });
+}
+
 export default {
   get,
+  login,
 };
