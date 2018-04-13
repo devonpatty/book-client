@@ -25,26 +25,16 @@ class Login extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     const { username, password } = this.state;
 
     dispatch(loginUser(username, password));
-  }
-
-  handleLogout = (e) => {
-    const { dispatch } = this.props;
-    dispatch(logoutUser());
+    history.push('/');
   }
 
   render() {
     const { username, password } = this.state;
-    const { isFetching, isAuthenticated, message } = this.props;
-
-    if (isAuthenticated) {
-      return (
-        <button onClick={this.handleLogout}>Útskrá</button>
-      );
-    }
+    const { isFetching, message } = this.props;
 
     if (isFetching) {
       return (
