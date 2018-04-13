@@ -1,3 +1,36 @@
 .header {
   background-color: #dcbe87;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
 }
+
+.header__homepage {
+  text-decoration: none;
+}
+
+.header__button {
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #4e1d04;
+  font-size: 1rem;
+  margin: 0 0 10px 0;
+}
+
+.profile__header {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.profile__pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 15px;
+}
+
