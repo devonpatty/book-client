@@ -44,7 +44,29 @@ function login(username, password) {
   });
 }
 
+function register(username, password, name) {
+  return new Promise((resolve, reject) => {
+    axios.post(`${baseurl}register`, {
+      username,
+      password,
+      name,
+    })
+    .then((response) => {
+      return resolve({ success: true, data: response });
+    })
+    .catch((err) => {
+      if ( err.response) {
+        const {
+          error,
+        } = err.response.data;
+        return resolve({ success: false, error });
+      }
+    });
+  });
+}
+
 export default {
   get,
   login,
+  register,
 };

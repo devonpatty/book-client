@@ -21,14 +21,12 @@ export default (state = initialState, action) => {
 
     /* todo setja upp reducer */
     case LOGIN_REQUEST:
-      console.log(action);
       return {
         ...state,
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
       }
     case LOGIN_SUCCESS:
-      console.log(action);
       return {
         ...state,
         isFetching: action.isFetching,
@@ -38,7 +36,6 @@ export default (state = initialState, action) => {
         message: action.message,
       }
     case LOGIN_FAILURE:
-      console.log(action);
       return {
         ...state,
         isFetching: action.isFetching,
