@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class BookEdit extends Component {
-  state = {
-    id: this.props.location.state.book.bookid,
-    title: this.props.location.state.book.title,
-    isbn13: this.props.location.state.book.isbn13,
-    author: this.props.location.state.book.author,
-    description: this.props.location.state.book.description,
-    category: this.props.location.state.book.category,
-    isbn10: this.props.location.state.book.isbn10,
-    published: this.props.location.state.book.published,
-    pagecount: this.props.location.state.book.pagecount,
-    language: this.props.location.state.book.language,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.location.state.book.bookid,
+      title: this.props.location.state.book.title,
+      isbn13: this.props.location.state.book.isbn13,
+      author: this.props.location.state.book.author,
+      description: this.props.location.state.book.description,
+      category: this.props.location.state.book.category,
+      isbn10: this.props.location.state.book.isbn10,
+      published: this.props.location.state.book.published,
+      pagecount: this.props.location.state.book.pagecount,
+      language: this.props.location.state.book.language,
+    };
+
+    this.changeTitle = this.changeTitle.bind(this);
+    this.changeIsbn13 = this.changeIsbn13.bind(this);
+    this.changeAuthor = this.changeAuthor.bind(this);
+    this.changeDescription = this.changeDescription.bind(this);
+    this.changeCategory = this.changeCategory.bind(this);
+    this.changeIsbn10 = this.changeIsbn10.bind(this);
+    this.changePublished = this.changePublished.bind(this);
+    this.changePagecount = this.changePagecount.bind(this);
+    this.changeLanguage = this.changeLanguage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
   changeTitle(event) {
     this.setState({title: event.target.value});
@@ -44,12 +59,38 @@ class BookEdit extends Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.title);
-    event.preventDefault();
+    const URL = 'https://djbook.herokuapp.com/books/:id'
+    const {
+      bookid,
+      title,
+      isbn13,
+      author,
+      description,
+      category,
+      isbn10,
+      published,
+      pagecount,
+      language,
+  } = this.state
+    axios.patch(URL , {
+      bookid,
+      title,
+      isbn13,
+      author,
+      description,
+      category,
+      isbn10,
+      published,
+      pagecount,
+      language,
+    }).then((response) => {
+      alert('A Patch update was submitted: ' + response);
+      event.preventDefault();
+    })
+
   }
 
   render() {
-    const { book } = this.props.location.state;
     const {
         bookid,
         title,
@@ -61,7 +102,7 @@ class BookEdit extends Component {
         published,
         pagecount,
         language,
-    } = book
+    } = this.state
 
     const path = 'https://vefforritun2-2018-v4-synilausn.herokuapp.com/'+bookid;
     return (
