@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Book from '../book'
 
 class Books extends Component {
 
@@ -33,8 +34,6 @@ class Books extends Component {
     this.setState({ title:  data.links.self.href});
   }
 
-
-
   render() {
       const { data, loading, error, title } = this.state;
 
@@ -51,8 +50,13 @@ class Books extends Component {
         <p>Bækur!</p>
         <ul>
           {data.items.map((book) => (
-              <li key={book.id}> 
-                {book.title} eftir {book.author}
+              <li key={book.bookid}>
+                <Link to={{
+                  pathname: '/books/'+book.bookid,
+                  state: { book: book}
+                }}>
+                {book.title}</Link>
+                <p>eftir {book.author}</p>
               </li>
           ))}
         </ul>
