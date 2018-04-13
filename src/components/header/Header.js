@@ -13,7 +13,11 @@ class Header extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, user } = this.props;
+    console.log(user);
+    
+    /* gervi boolean fyrir profile picture */
+    const pic = true;
 
     return (
       <header className="header">
@@ -24,7 +28,13 @@ class Header extends Component {
         {/* ætti samt frekar heima í sér component */}
         <Button onClick={this.onClick}>Leita</Button>
 
-        { !isAuthenticated ? <NavLink to="/login">Innskráning</NavLink> : <button className="button">Logout</button>}
+        <div className="profile__header">
+          { pic ? <div className="profile__pic"></div> : null }
+          <div className="profile__container_right">
+            { user ? <p>{user}</p> : null }
+            { !isAuthenticated ? <NavLink to="/login">Innskráning</NavLink> : <button className="header__button">Logout</button>}
+          </div>
+        </div>
       </header>
     );
   }
@@ -33,6 +43,7 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
   }
 }
 
