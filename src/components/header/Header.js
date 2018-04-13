@@ -14,7 +14,6 @@ class Header extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props;
-    console.log(user);
     
     /* gervi boolean fyrir profile picture */
     const pic = true;
