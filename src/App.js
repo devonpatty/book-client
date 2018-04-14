@@ -10,6 +10,9 @@ import Home from './routes/home';
 import Login from './routes/login';
 import Profile from './routes/profile';
 import NotFound from './routes/not-found';
+import Books from './routes/books';
+import Book from './routes/book';
+import BookEdit from './routes/bookEdit';
 import Register from './routes/register';
 
 /* todo fleiri routes */
@@ -32,6 +35,9 @@ class App extends Component {
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
+            <Route exact path="/books" component={Books}/>
+            <Route path="/books/:id/edit" component={BookEdit}/>
+            <Route path="/books/:id/" component={Book}/>
             <Route path="/register" exact component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />
             {/* todo fleiri route */}

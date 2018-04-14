@@ -12,6 +12,15 @@ class Home extends Component {
     return (
       <div>
         <h2>Velkomin á bókasafnið</h2>
+      
+        <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
+        Þangað til getur þú skoðað 
+        <Link to={{
+            pathname:"/books",
+            state: { title:  "https://djbook.herokuapp.com/books" }
+          }}>allar bækurnar</Link>.
+        </p>
+
         { !isAuthenticated ? 
           <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
           Þangað til getur þú skoðað <Link to="/books">allar bækurnar</Link>.
@@ -20,7 +29,6 @@ class Home extends Component {
           <p>Þú ert skráður notandi og getur því <Link to="/books">skráð bækur</Link> og breytt <Link to="/books">þeim sem til eru </Link>
           . Einnig getur þú skoðað <Link to="/users">aðra notendur.</Link></p>
         }
-
       </div>
     );
   }
