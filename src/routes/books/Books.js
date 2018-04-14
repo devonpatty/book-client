@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import Book from '../book'
 
 class Books extends Component {
-
-  state = {
+  constructor(props) {
+    super(props);
+  this.state = {
     title: this.props.location.state.title,
     data: null,
     loading: true,
     error: false,
   }
+  this.onClickk = this.onClickk.bind(this);
+}
 
   async componentDidMount() {
     try {
