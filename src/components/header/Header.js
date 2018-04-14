@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import Button from '../button';
 
@@ -14,14 +13,27 @@ class Header extends Component {
   }
 
   render() {
+    const { isAuthenticated, user } = this.props;
+    
+    /* gervi boolean fyrir profile picture */
+    const pic = true;
+
     return (
       <header className="header">
-        <h1 className="header__heading"><Link to="/">Bókasafnið</Link></h1>
+        <h1 className="header__heading">
+          <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
+        </h1>
 
         {/* ætti samt frekar heima í sér component */}
         <Button onClick={this.onClick}>Leita</Button>
 
-        <Link to="/login">Innskráning</Link>
+        <div className="profile__header">
+          { pic ? <div className="profile__pic"></div> : null }
+          <div className="profile__container_right">
+            { user ? <p>{user}</p> : null }
+            { !isAuthenticated ? <NavLink to="/login">Innskráning</NavLink> : <button className="header__button">Logout</button>}
+          </div>
+        </div>
       </header>
     );
   }
@@ -29,7 +41,8 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
   }
 }
 

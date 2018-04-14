@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Home extends Component {
 
@@ -9,15 +10,13 @@ class Home extends Component {
 
     return (
       <div>
-        <p>Halló heimur!</p>
-        <p><Link to="/login">Innskráning</Link></p>
-        <p>
-          <Link to={{
+        <h2>Velkomin á bókasafnið</h2>
+        <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
+        Þangað til getur þú skoðað 
+        <Link to={{
             pathname:"/books",
             state: { title:  "https://djbook.herokuapp.com/books" }
-          }}>
-          Bækur
-          </Link>
+          }}>allar bækurnar</Link>.
         </p>
       </div>
     );
@@ -25,4 +24,12 @@ class Home extends Component {
 }
 
 /* todo setja upp tengingu við redux til að vita stöðu notanda */
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    isFetching: state.auth.isFetching,
+    isAuthenticated: state.auth.isAuthenticated,
+    message: state.auth.message,
+  }
+}
+
+export default connect(mapStateToProps)(Home);
