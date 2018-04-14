@@ -7,10 +7,12 @@ class Home extends Component {
   render() {
 
     /* todo birta mismunandi upplýsingar ef innskráður notandi eða ekki */
+    const { isAuthenticated } = this.props;
 
     return (
       <div>
         <h2>Velkomin á bókasafnið</h2>
+      
         <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
         Þangað til getur þú skoðað 
         <Link to={{
@@ -18,6 +20,15 @@ class Home extends Component {
             state: { title:  "https://djbook.herokuapp.com/books" }
           }}>allar bækurnar</Link>.
         </p>
+
+        { !isAuthenticated ? 
+          <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
+          Þangað til getur þú skoðað <Link to="/books">allar bækurnar</Link>.
+          </p>
+          :
+          <p>Þú ert skráður notandi og getur því <Link to="/books">skráð bækur</Link> og breytt <Link to="/books">þeim sem til eru </Link>
+          . Einnig getur þú skoðað <Link to="/users">aðra notendur.</Link></p>
+        }
       </div>
     );
   }
@@ -26,7 +37,6 @@ class Home extends Component {
 /* todo setja upp tengingu við redux til að vita stöðu notanda */
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,
     message: state.auth.message,
   }

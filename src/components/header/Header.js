@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { logoutUser } from '../../actions/auth';
 
 import Button from '../button';
 
@@ -10,6 +11,11 @@ class Header extends Component {
 
   onClick = (e) => {
     console.log('leita');
+  }
+
+  handleLogout = (e) => {
+    const { dispatch } = this.props;
+    dispatch(logoutUser());
   }
 
   render() {
@@ -30,8 +36,11 @@ class Header extends Component {
         <div className="profile__header">
           { pic ? <div className="profile__pic"></div> : null }
           <div className="profile__container_right">
-            { user ? <p>{user}</p> : null }
-            { !isAuthenticated ? <NavLink to="/login">Innskráning</NavLink> : <button className="header__button">Logout</button>}
+            { user ? <p><Link to="/profile">{user}</Link></p> : null }
+            { !isAuthenticated ? 
+              <NavLink to="/login">Innskráning</NavLink> 
+              : 
+              <button onClick={this.handleLogout} className="header__button">Logout</button>}
           </div>
         </div>
       </header>
