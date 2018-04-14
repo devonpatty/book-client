@@ -34,7 +34,6 @@ class App extends Component {
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
-            <UserRoute path="/profile" authenticated={authenticated} component={Profile} />
             <Route exact path="/books" component={Books}/>
             <Route path="/books/:id/edit" component={BookEdit}/>
             <Route path="/books/:id/" component={Book}/>
