@@ -20,7 +20,8 @@ class App extends Component {
 
   render() {
     //const authenticated = true; /* vita hvort notandi sé innskráður */
-    const { isAuthenticate } = this.props;
+    const { isAuthenticated } = this.props;
+
     return (
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
@@ -32,7 +33,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />
-            <UserRoute path="/profile" authenticated={isAuthenticate} component={Profile} />
+            <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>
@@ -46,7 +47,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   /* todo stilla redux ef það er notað */
   return {
-    isAuthenticate: state.auth.isAuthenticate,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
