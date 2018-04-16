@@ -4,6 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { logoutUser } from '../../actions/auth';
 import { getPic } from '../../actions/upload';
 
+import Search from '../search';
 import Button from '../button';
 
 import './Header.css';
@@ -12,13 +13,6 @@ class Header extends Component {
 
   onClick = (e) => {
     console.log('leita');
-  }
-
-  componentDidMount = () => {
-    const { dispatch } = this.props;
-
-    dispatch(getPic());
-
   }
 
   handleLogout = (e) => {
@@ -41,8 +35,7 @@ class Header extends Component {
           <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
         </h1>
 
-        {/* ætti samt frekar heima í sér component */}
-        <Button onClick={this.onClick}>Leita</Button>
+        <Search />
 
         <div className="profile__header">
           { isAuthenticated ? 
