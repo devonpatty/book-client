@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import { logoutUser } from '../../actions/auth';
+import { getPic } from '../../actions/upload';
 
 import Button from '../button';
 
@@ -11,6 +12,13 @@ class Header extends Component {
 
   onClick = (e) => {
     console.log('leita');
+  }
+
+  componentDidMount = () => {
+    const { dispatch } = this.props;
+
+    dispatch(getPic());
+
   }
 
   handleLogout = (e) => {

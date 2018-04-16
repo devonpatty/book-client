@@ -119,10 +119,32 @@ function updatePicture(pic) {
   });
 }
 
+function getMe() {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+
+    axios.get(
+      `${baseurl}users/me`,
+      {
+        headers: { Authorization: `Bearer ${parsedToken}` },
+      },
+    )
+    .then((response) => {
+      const { url } = response.data;
+      return resolve({ url });
+    })
+    .catch((error) => {
+      return resolve({ error });
+    });
+  });
+}
+
 export default {
   get,
   login,
   register,
   updateName,
   updatePicture,
+  getMe,
 };
