@@ -65,8 +65,64 @@ function register(username, password, name) {
   });
 }
 
+function updateName(name, password) {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+    console.log(typeof token, typeof parsedToken);
+    axios({
+      method: 'patch',
+      url: `${baseurl}users/me`,
+      data: {
+        name,
+        password,
+      },
+      headers: { Authorization: `Bearer ${parsedToken}` },
+    })
+    .then((response) => {
+      return resolve({ response });
+    })
+    .catch((err) => {
+      if (err.response) {
+        const {
+          error,
+        } = err.response.data;
+        return resolve({ error });
+      }
+    });
+  });
+}
+
+function updatePicture(pic) {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+    axios.post(
+      `${baseurl}users/me/profile`,
+      pic,
+      {
+        headers: { Authorization: `Bearer ${parsedToken}` },
+      },
+    )
+    .then((response) => {
+      const { secure_url } = response.data;
+      return resolve({ secure_url });
+    })
+    .catch((err) => {
+      if (err.response) {
+        const {
+          error,
+        } = err.response.data;
+        return resolve({ error });
+      }
+    });
+  });
+}
+
 export default {
   get,
   login,
   register,
+  updateName,
+  updatePicture,
 };
