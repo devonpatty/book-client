@@ -19,10 +19,13 @@ class Header extends Component {
   }
 
   render() {
-    const { isAuthenticated, user } = this.props;
-    
-    /* gervi boolean fyrir profile picture */
-    const pic = true;
+    const { 
+      isAuthenticated, 
+      user, 
+      url, 
+    } = this.props;
+
+    let defaultImg = url === null ? "/profile.jpg" : url;
 
     return (
       <header className="header">
@@ -34,7 +37,11 @@ class Header extends Component {
         <Button onClick={this.onClick}>Leita</Button>
 
         <div className="profile__header">
-          { pic ? <div className="profile__pic"></div> : null }
+          { isAuthenticated ? 
+            <img src={defaultImg} className="profile__pic"></img> 
+            : 
+            null 
+          }
           <div className="profile__container_right">
             { user ? <p><Link to="/profile">{user}</Link></p> : null }
             { !isAuthenticated ? 
@@ -52,6 +59,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
+    url: state.upload.url,
   }
 }
 

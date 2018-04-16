@@ -25,11 +25,14 @@ class Login extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { dispatch, history } = this.props;
+    const { dispatch, history, message } = this.props;
     const { username, password } = this.state;
 
     dispatch(loginUser(username, password));
-    history.push('/');
+    if (!message) {
+      history.push('/');
+    }
+
   }
 
   render() {
