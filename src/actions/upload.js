@@ -46,3 +46,22 @@ export const upload = (file) => {
     }
   }
 }
+
+export const getPic = () => {
+  return async (dispatch) => {
+    dispatch(requestUpload());
+
+    let picture;
+    try {
+      picture = await api.getMe();
+    } catch (err) {
+      return dispatch(uploadError(err));
+    }
+
+    if(picture) {
+      const { url } = picture;
+      localStorage.setItem('picture', JSON.stringify(url));
+      dispatch(receiveUrl(url));
+    }
+  }
+}
