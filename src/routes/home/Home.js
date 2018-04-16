@@ -16,8 +16,7 @@ class Home extends Component {
         <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
         Þangað til getur þú skoðað 
         <Link to={{
-            pathname:"/books",
-            state: { title:  "https://djbook.herokuapp.com/books" }
+            pathname:"/books"
           }}>allar bækurnar</Link>.
         </p>
 

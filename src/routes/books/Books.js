@@ -8,13 +8,14 @@ class Books extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.location.state.title,
+      title: "https://djbook.herokuapp.com/books",
       data: null,
       loading: true,
       error: false,
       page: 0,
       limit: 10,
       prev: false,
+      searchQuery: "",
     }
   }
 
@@ -36,14 +37,21 @@ class Books extends Component {
   }
 
   async fetchData(page) {
-    const response = await fetch(this.state.title + "?offset=" + this.state.page * this.state.limit + "&limit=" + this.state.limit);
+    let response;
+    console.log(this.state.searchQuery);
+    if (this.state.searchQuery !== null & this.state.searchQuery !== undefined && this.state.searchQuery.length > 0) {
+      // SEARCHING
+      response = await fetch(this.state.title + "?search=" + this.state.searchQuery + "&offset=" + this.state.page * this.state.limit + "&limit=" + this.state.limit);
+    } else {
+      // NOT SEARCHING
+      response = await fetch(this.state.title + "?offset=" + this.state.page * this.state.limit + "&limit=" + this.state.limit);
+    }
     const data = await response.json();
     return data;
   }
 
   nextPage = () => {
     this.setState({page: this.state.page + 1}, this.getData);
-
   };
 
   prevPage = () => {

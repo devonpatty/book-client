@@ -8,9 +8,15 @@ import Button from '../button';
 import './Header.css';
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: '',
+    };
+  }
 
-  onClick = (e) => {
-    console.log('leita');
+  search = () => {
+    
   }
 
   handleLogout = (e) => {
@@ -31,7 +37,15 @@ class Header extends Component {
         </h1>
 
         {/* ætti samt frekar heima í sér component */}
-        <Button onClick={this.onClick}>Leita</Button>
+        <div>
+          <input onChange={evt => {this.setState({inputValue: evt.target.value})} } type="text" name="search"/>
+          <Button onClick={this.search}>
+            <Link to={{
+              pathname:"/books?search=" + this.state.inputValue,
+            }}>Leita</Link>
+          </Button>
+        </div>
+        
 
         <div className="profile__header">
           { pic ? <div className="profile__pic"></div> : null }
