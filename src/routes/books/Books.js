@@ -14,6 +14,7 @@ class Books extends Component {
       error: false,
       page: 0,
       limit: 10,
+      prev: false,
     }
   }
 
@@ -22,6 +23,7 @@ class Books extends Component {
   }
 
   async getData() {
+    this.setState({ prev: this.state.page > 0 });
     try {
       const data = await this.fetchData(this.state.page);
       this.setState({ data, loading: false });
@@ -30,6 +32,7 @@ class Books extends Component {
       console.error("Error fetching books", e);
       this.setState({ error: true, loading: false });
     }
+
   }
 
   async fetchData(page) {
@@ -45,7 +48,6 @@ class Books extends Component {
 
   prevPage = () => {
     this.setState({page: this.state.page - 1}, this.getData);
-    
   };
 
 
@@ -79,7 +81,7 @@ class Books extends Component {
           ))}
         </ul>
         <div>
-          <Button onClick={this.prevPage}>Fyrri síða</Button>
+          { this.state.prev ? <Button onClick={this.prevPage}>Fyrri síða</Button> : null }
           <p>Síða {this.state.page + 1}</p>
           <Button onClick={this.nextPage}>Næsta Síða</Button>
         </div>
