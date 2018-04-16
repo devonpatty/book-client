@@ -19,7 +19,8 @@ class Search extends Component {
 
   handleSubmitSearch = (e) => {
     e.preventDefault();
-    axios.get(`https://djbook.herokuapp.com/books`)
+    const { search } = this.state;
+    axios.get(`https://djbook.herokuapp.com/books?search=${search}`)
     .then((response) => {
       console.log(response);
     });
