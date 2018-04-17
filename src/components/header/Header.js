@@ -26,7 +26,8 @@ class Header extends Component {
     const { dispatch } = this.props;
 
     this.searchValue = bookName.search;
-    dispatch(searchBooks(this.searchValue));
+    const page = 1;
+    dispatch(searchBooks(this.searchValue, this.searchValue, page));
   }
 
   render() {
