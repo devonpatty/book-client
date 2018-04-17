@@ -153,6 +153,18 @@ function search(title) {
   });
 }
 
+function searchHref(url) {
+  return new Promise((resolve, reject) => {
+    axios.get(url)
+    .then((response) => {
+      const { data } = response;
+      return resolve({ data });
+    })
+    .catch((error) => {
+      return resolve({ error });
+    });
+  });
+}
 export default {
   get,
   login,
@@ -161,4 +173,5 @@ export default {
   updatePicture,
   getMe,
   search,
+  searchHref,
 };
