@@ -140,6 +140,19 @@ function getMe() {
   });
 }
 
+function search(title) {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseurl}books?search=${title}`)
+    .then((response) => {
+      const { data } = response;
+      return resolve({ data });
+    })
+    .catch((error) => {
+      return resolve({ error });
+    });
+  });
+}
+
 export default {
   get,
   login,
@@ -147,4 +160,5 @@ export default {
   updateName,
   updatePicture,
   getMe,
+  search,
 };

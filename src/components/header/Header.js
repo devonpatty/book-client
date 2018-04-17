@@ -3,22 +3,18 @@ import { connect } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import { logoutUser } from '../../actions/auth';
 import { getPic } from '../../actions/upload';
+import { searchBooks } from '../../actions/search';
 
-import Button from '../button';
+import Search from '../search';
 
 import './Header.css';
 
 class Header extends Component {
 
+  state = { searchValue: '', };
+
   onClick = (e) => {
     console.log('leita');
-  }
-
-  componentDidMount = () => {
-    const { dispatch } = this.props;
-
-    dispatch(getPic());
-
   }
 
   handleLogout = (e) => {
@@ -26,11 +22,19 @@ class Header extends Component {
     dispatch(logoutUser());
   }
 
+  searchBook = (bookName) => {
+    const { dispatch } = this.props;
+
+    this.searchValue = bookName.search;
+    dispatch(searchBooks(this.searchValue));
+  }
+
   render() {
     const { 
       isAuthenticated, 
       user, 
       url, 
+      history,
     } = this.props;
 
     let defaultImg = url === null ? "/profile.jpg" : url;
@@ -41,8 +45,7 @@ class Header extends Component {
           <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
         </h1>
 
-        {/* ætti samt frekar heima í sér component */}
-        <Button onClick={this.onClick}>Leita</Button>
+        <Search history={history} onSubmit={this.searchBook} />
 
         <div className="profile__header">
           { isAuthenticated ? 
