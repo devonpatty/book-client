@@ -50,6 +50,19 @@ function searchError(error) {
   }
 }
 
+function iterate(items) {
+  let counter = 0;
+  items.map((item) => {
+    if(item) {
+      counter++;
+    }
+  });
+  if(counter < 10) {
+    return false;
+  }
+  return true;
+}
+
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
 export const searchBooks = (title) => {
   return async (dispatch) => {
@@ -64,12 +77,13 @@ export const searchBooks = (title) => {
 
     const resetPage = 1;
     let boo = search.data.links;
+
     let show;
     if (search) {
-      if (boo.hasOwnProperty("next")) {
+      if (iterate(search.data.items)) {
         show = true;
         dispatch(receiveBooks(search, title, resetPage, resetPage, show));
-      } else if (!boo.hasOwnProperty("next")) {
+      } else {
         show = false;
         dispatch(receiveBooks(search, title, resetPage, resetPage, show));
       }
@@ -98,7 +112,7 @@ export const goToHref = (href, title, changePage, action) => {
     let boo = search.data.links;
     let show;
     if (search) {
-      if (boo.hasOwnProperty("next")) {
+      if (iterate(search.data.items)) {
         show = true;
         dispatch(hrefSearch(search, title, manualPage, show));
       } else if (!boo.hasOwnProperty("next")) {
