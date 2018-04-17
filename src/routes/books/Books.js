@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { searchBooks } from '../../actions/search';
 import PropTypes from 'prop-types';
 
 class Books extends Component {
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+
+    dispatch(searchBooks(''));
+  }
 
   render() {
     const { isSearching, isCompleted, books } = this.props;
