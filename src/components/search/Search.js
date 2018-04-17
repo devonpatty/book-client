@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import axios from 'axios';
+
 import Button from '../button';
 
 import './Search.css';
@@ -19,20 +19,23 @@ class Search extends Component {
 
   handleSubmitSearch = (e) => {
     e.preventDefault();
-    const { search } = this.state;
-    axios.get(`https://djbook.herokuapp.com/books?search=${search}`)
-    .then((response) => {
-      console.log(response);
+    
+    this.props.onSubmit(this.state);
+
+    this.setState({
+      search: '',
     });
   }
 
   render() {
     const { search } = this.state;
     return (
-      <div>
+      <form onSubmit={this.handleSubmitSearch}>
         <input id="search" type="text" placeholder="Bókarleita" name="search" value={search} onChange={this.handleInputSearch} />
-        <Button onClick={this.handleSubmitSearch} className="button">Leita</Button>
-      </div>
+        <Button className="button">
+          Leita
+        </Button>
+      </form>
     );
   }
 }
