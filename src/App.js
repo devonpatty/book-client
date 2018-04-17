@@ -29,7 +29,7 @@ class App extends Component {
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
 
-        <Header />
+        <Header history={this.props.history} />
 
         <div className="main__content">
           <Switch location={this.props.location}>

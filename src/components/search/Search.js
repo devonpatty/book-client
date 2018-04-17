@@ -19,22 +19,27 @@ class Search extends Component {
 
   handleSubmitSearch = (e) => {
     e.preventDefault();
-    
+    const { history } = this.props;
+
     this.props.onSubmit(this.state);
 
     this.setState({
       search: '',
     });
+    history.push('/books');
   }
 
   render() {
     const { search } = this.state;
     return (
-      <form onSubmit={this.handleSubmitSearch}>
-        <input id="search" type="text" placeholder="Bókarleita" name="search" value={search} onChange={this.handleInputSearch} />
-        <Button className="button">
-          Leita
-        </Button>
+      <form >
+        <input
+          id="search" 
+          type="text" 
+          placeholder="Bókarleita" 
+          name="search" value={search} 
+          onChange={this.handleInputSearch} />
+        <Button onClick={this.handleSubmitSearch}className="button">Leita</Button>
       </form>
     );
   }

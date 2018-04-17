@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import { logoutUser } from '../../actions/auth';
 import { getPic } from '../../actions/upload';
-import axios from 'axios';
+import { searchBooks } from '../../actions/search';
 
 import Search from '../search';
-import Button from '../button';
 
 import './Header.css';
 
@@ -24,11 +23,10 @@ class Header extends Component {
   }
 
   searchBook = (bookName) => {
+    const { dispatch } = this.props;
+
     this.searchValue = bookName.search;
-    axios.get(`https://djbook.herokuapp.com/books/?search=${this.searchValue}`)
-    .then((data) => {
-      console.log(data);
-    });
+    dispatch(searchBooks(this.searchValue));
   }
 
   render() {
@@ -36,6 +34,7 @@ class Header extends Component {
       isAuthenticated, 
       user, 
       url, 
+      history,
     } = this.props;
 
     let defaultImg = url === null ? "/profile.jpg" : url;
@@ -46,7 +45,7 @@ class Header extends Component {
           <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
         </h1>
 
-        <Search onSubmit={this.searchBook} />
+        <Search history={history} onSubmit={this.searchBook} />
 
         <div className="profile__header">
           { isAuthenticated ? 
