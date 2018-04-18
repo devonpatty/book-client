@@ -18,8 +18,9 @@ class Header extends Component {
   }
 
   handleLogout = (e) => {
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     dispatch(logoutUser());
+    history.push('/login');
   }
 
   searchBook = (bookName) => {
@@ -28,6 +29,15 @@ class Header extends Component {
     this.searchValue = bookName.search;
     const page = 1;
     dispatch(searchBooks(this.searchValue, this.searchValue, page));
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const { dispatch, isAuthenticated } = this.props;
+    if (isAuthenticated) {
+      dispatch(getPic());
+    } else {
+      /*Do nothing*/
+    }
   }
 
   render() {
