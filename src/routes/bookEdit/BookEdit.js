@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import './BookEdit.css';
+
+import Button from "../../components/button/index";
+
 class BookEdit extends Component {
   constructor(props) {
     super(props);
@@ -107,47 +111,106 @@ class BookEdit extends Component {
     const path = 'https://vefforritun2-2018-v4-synilausn.herokuapp.com/'+bookid;
     return (
       <div>
-        <p>Breyta Bók!</p>
+        <h2 className="margin_div">Breyta Bók</h2>
         {/*<form method='PATCH' action={path}>*/}
-        <form onSubmit={this.handleSubmit}>
-          <label> 
-            Titill:
-            <input type='text' value={title} onChange={this.changeTitle}/>
-          </label>
-          <label> 
-            isbn13:
-            <input type='text' value={isbn13} onChange={this.changeIsbn13}/>
-          </label>
-          <label> 
-            Höfundur:
-            <input type='text' value={author} onChange={this.changeAuthor}/>
-          </label>
-          <label> 
-            Lýsing:
-            <input type='text' value={description} onChange={this.changeDescription}/>
-          </label>
-          <label> 
-            Flokkur:
-            <input type='text' value={category} onChange={this.changeCategory}/>
-          </label>
-          <label> 
-            isbn10:
-            <input type='text' value={isbn10} onChange={this.changeIsbn10}/>
-          </label>
-          <label> 
-            Gefið út:
-            <input type='text' value={published} onChange={this.changePublished}/>
-          </label>
-          <label> 
-            Blaðsíður:
-            <input type='text' value={pagecount} onChange={this.changePagecount}/>
-          </label>
-          <label> 
-            Tungumál:
-            <input type='text' value={language} onChange={this.changeLanguage}/>
-          </label>
-          <input type="submit" value="Submit"/>
-        </form>
+        <div className="change_div">
+          <form>
+            <div className="margin_div">
+              <label  className="book_edit_label">
+                <div>
+                  Titill:
+                </div> 
+                <div>
+                  <input className="book_edit_input" type='text' value={title} onChange={this.changeTitle}/>
+                </div>                
+              </label>
+            </div>
+            <div className="margin_div">
+              <label className="book_edit_label">
+                <div>
+                  Höfundur:
+                </div>
+                <div>
+                  <input className="book_edit_input" type='text' value={author} onChange={this.changeAuthor}/>                  
+                </div>
+              </label>
+            </div>
+            <div className="margin_div">
+              <label> 
+                <div>
+                  Lýsing:  
+                </div>
+                <div>
+                  <textarea className="book_edit_desc" type='text' value={description} onChange={this.changeDescription}/> 
+                </div>
+              </label>
+            </div>
+            <div className="margin_div">
+              <label> 
+                <div>
+                  Flokkur:  
+                </div>
+                <div>
+                  <input type='text' value={category} onChange={this.changeCategory}/>  
+                </div>
+              </label>
+            </div>
+            <div className="margin_div">
+              <label className="book_edit_label"> 
+                <div>
+                  ISBN10:  
+                </div>
+                <div>
+                  <input className="book_edit_input" type='text' value={isbn10} onChange={this.changeIsbn10}/>  
+                </div>
+              </label>
+            </div>
+            <div className="margin_div">
+              <label className="book_edit_label"> 
+                <div>
+                  ISBN13:
+                </div>
+                <div>
+                  <input className="book_edit_input" type='text' value={isbn13} onChange={this.changeIsbn13}/>
+                </div>  
+              </label>
+            </div>
+            <div className="margin_div">
+              <label className="book_edit_label"> 
+                <div>
+                  Útgefin:
+                </div>
+                <div>
+                  <input className="book_edit_input" type='text' value={published} onChange={this.changePublished}/>
+                </div>
+              </label>
+            </div>
+            <div className="margin_div">
+              <label className="book_edit_label"> 
+                <div>
+                  Fjöldi síðna: 
+                </div>
+                <div>
+                  <input className="book_edit_input" type='text' value={pagecount} onChange={this.changePagecount}/> 
+                </div>
+              </label>           
+            </div>
+            <div className="margin_div">
+              <label className="book_edit_label"> 
+                <div>
+                  Tungumál:
+                </div>
+                <div>
+                  <input className="book_edit_input" type='text' value={language} onChange={this.changeLanguage}/>
+                </div>
+              </label>
+            </div>
+          </form>
+          <Button className="btn_save" onClick={this.handleSubmit}>Vista</Button>
+        </div>
+        <div>
+          <Button>Til baka</Button>
+        </div>
       </div>
     );
   }
