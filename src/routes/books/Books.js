@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { searchBooks } from '../../actions/search';
 import PropTypes from 'prop-types';
 
+import Button from "../../components/button/index";
+
+import './Books.css';
+
 class Books extends Component {
 
   componentDidMount() {
@@ -22,20 +26,25 @@ class Books extends Component {
     return (
       <div>
         {/* þarf að senda search key words hér*/}
-        <h2>Bókaleit: </h2>
-        <ul>
+        <h2 className="books_title">Bókaleit: </h2>
           { books && (books.data.items.map((book) => 
-            <li key={book.bookid}>
-              <span>{book.title}</span>
+            <div className="book_div" key={book.bookid}>
+              <Link className="book_title"
+                to={{
+                  pathname: "/books/" + book.bookid,
+                  state: { book: book }
+                }}
+              >
+                <h3>{book.title}</h3>
+              </Link>
               <span>Eftir {book.author}, gefin út {book.published}</span>
-            </li>
+            </div>
           )) }
-        </ul>
         <div>
           {/*líklega conditional render hérna fyrir next og previous page*/}
           {/*á eftir að útfæra next og previous button*/}
-          <button>{`<`} Fyrri síða</button>
-          <button>Næsta síða {`>`}</button>
+          <Button>{`<`} Fyrri síða</Button>
+          <Button>Næsta síða {`>`}</Button>
         </div>
       </div>
     );

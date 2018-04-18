@@ -1,0 +1,29 @@
+.book_edit_label {
+    display: flex;
+    justify-content: space-between;
+}
+
+label {
+    font-size: 14px;
+}
+
+.book_edit_input {
+    width: 200px;
+}
+
+.book_edit_desc {
+    width: 400px;
+    height: 100px;
+}
+
+.change_div {
+    max-width: 330px;;
+}
+
+.margin_div {
+    margin-bottom: 20px;
+}
+
+.btn_save {
+    margin-bottom: 40px;
+}
