@@ -69,7 +69,7 @@ function updateName(name, password) {
   return new Promise((resolve, reject) => {
     const token = window.localStorage.getItem('token');
     const parsedToken = JSON.parse(token);
-    console.log(typeof token, typeof parsedToken);
+
     axios({
       method: 'patch',
       url: `${baseurl}users/me`,
@@ -153,6 +153,59 @@ function search(title) {
   });
 }
 
+function searchHref(url) {
+  return new Promise((resolve, reject) => {
+    axios.get(url)
+    .then((response) => {
+      const { data } = response;
+      return resolve({ data });
+    })
+    .catch((error) => {
+      return resolve({ error });
+    });
+  });
+}
+
+function getMeRead() {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+
+    axios.get(
+      `${baseurl}users/me/read`,
+      {
+        headers: { Authorization: `Bearer ${parsedToken}` },
+      }
+    )
+    .then((response) => {
+      const { data } = response;
+      return resolve({ data });
+    })
+    .catch((error) => {
+      return resolve({ error});
+    });
+  });
+}
+
+function deleteBook(id) {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+
+    axios({
+      method: 'delete',
+      url: `${baseurl}users/me/read/${id}`,
+      headers: { Authorization: `Bearer ${parsedToken}` },
+    })
+    .then((response) => {
+      return resolve({ response });
+    })
+    .catch((error) => {
+      return resolve({ error });
+    });
+  });
+}
+
 export default {
   get,
   login,
@@ -161,4 +214,7 @@ export default {
   updatePicture,
   getMe,
   search,
+  searchHref,
+  getMeRead,
+  deleteBook,
 };
