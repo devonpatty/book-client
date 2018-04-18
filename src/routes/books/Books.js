@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchBooks, goToHref } from '../../actions/search';
+import querystring from 'querystring';
+
 import PropTypes from 'prop-types';
 
 class Books extends Component {
@@ -12,20 +14,26 @@ class Books extends Component {
   }
 
   nextPage = () => {
-    const { books, query, dispatch, changePage } = this.props;
+    const { books, query, dispatch, changePage, history } = this.props;
     const { links } = books.data;
 
     const nextAc = 'next';
     dispatch((goToHref(links.next.href, query, changePage, nextAc)));
-
+    history.push(this.queryString(query, changePage+1));
   }
 
   prevPage = () => {
-    const { books, query, dispatch, changePage } = this.props;
+    const { books, query, dispatch, changePage, history } = this.props;
     const { links } = books.data;
     
     const prevAc = 'prev';
     dispatch((goToHref(links.prev.href, query, changePage, prevAc)));
+    history.push(this.queryString(query, changePage-1));
+  }
+
+  queryString = (query = '', page = 1) => {
+    const str = querystring.stringify({ search: query, page });
+    return `/books?${str}`;
   }
 
   render() {

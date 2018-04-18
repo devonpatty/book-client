@@ -115,7 +115,7 @@ export const goToHref = (href, title, changePage, action) => {
       if (iterate(search.data.items)) {
         show = true;
         dispatch(hrefSearch(search, title, manualPage, show));
-      } else if (!boo.hasOwnProperty("next")) {
+      } else {
         show = false;
         dispatch(hrefSearch(search, title, manualPage, show));
       }

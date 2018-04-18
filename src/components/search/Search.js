@@ -26,7 +26,7 @@ class Search extends Component {
     this.setState({
       search: '',
     });
-    history.push('/books');
+    history.push(`/books?search=${this.state.search}&page=1`);
   }
 
   render() {

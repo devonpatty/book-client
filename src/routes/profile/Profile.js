@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReadBooks from '../readBooks';
+
 import api from '../../api';
 import { connect } from 'react-redux';
 
@@ -11,6 +13,19 @@ class Profile extends Component {
     username: '',
     password: '',
     passwordCheck: '',
+    readBooks: null,
+  }
+
+  componentDidMount = async () => {
+    let readBooks;
+    try {
+      readBooks = await api.getMeRead();
+      const { data } = readBooks;
+      this.setState({ readBooks: data });
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   handleInputChange = (e) => {
@@ -28,9 +43,8 @@ class Profile extends Component {
     let updateUser;
     try {
       updateUser = await api.updateName(username, passwordCheck);
-      console.log(updateUser);
     } catch (error) {
-      console.log(error);
+      
     }
   }
 
@@ -53,16 +67,30 @@ class Profile extends Component {
     });
   }
 
+  handleDelete = async (bookId, book) => {
+    let del;
+    try {
+      del = await api.deleteBook(bookId);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      const newReadBooks = this.state.readBooks.filter((item) => {
+        return item != book;
+      });
+      this.setState({ readBooks: newReadBooks });
+    }
+  }
+
   render() {
 
-    const { username, password, passwordCheck } = this.state;
+    const { username, password, passwordCheck, readBooks } = this.state;
 
     return (
       <div>
         <h2>Upplýsingar</h2>
 
         <form encType="multipart/form-data" onSubmit={this.handleUploadPic}>
-          <input type="file" name="picture" accept="image/*" multiple={false} onChange={this.handleFileChanged}/>
+          <input required type="file" name="picture" accept="image/*" multiple={false} onChange={this.handleFileChanged}/>
           
           <button>Uppfæra mynd</button>
         </form>
@@ -80,6 +108,12 @@ class Profile extends Component {
           <button>Uppfæra</button>
         </form>
         <h2>Lesnar bækur</h2>
+        { readBooks && (
+          <ReadBooks 
+            books={readBooks}
+            handleDelete={this.handleDelete.bind(this)}
+          />
+        )}
       </div>
     );
   }
