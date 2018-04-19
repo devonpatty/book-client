@@ -1,7 +1,15 @@
-.book_div {
+.books_div {
     padding-bottom: 20px;
 }
 
 .books_title {
     padding-bottom: 20px;
+}
+
+.button_flex {
+    display: flex;
+}
+
+.page_number {
+    margin: 10px 20px 0px 20px;
 }
