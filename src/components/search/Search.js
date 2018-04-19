@@ -36,10 +36,10 @@ class Search extends Component {
         <input
           id="search" 
           type="text" 
-          placeholder="Bókarleita" 
+          placeholder="Bókaleit" 
           name="search" value={search} 
           onChange={this.handleInputSearch} />
-        <Button onClick={this.handleSubmitSearch}className="button">Leita</Button>
+        <button onClick={this.handleSubmitSearch}className="button header__button">Leita</button>
       </form>
     );
   }
