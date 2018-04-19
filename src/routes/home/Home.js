@@ -7,7 +7,11 @@ class Home extends Component {
   render() {
 
     /* todo birta mismunandi upplýsingar ef innskráður notandi eða ekki */
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, isFetching } = this.props;
+
+    if (isFetching) {
+      return (<p>loading...</p>);
+    }
 
     return (
       <div>
@@ -35,6 +39,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     message: state.auth.message,
+    isFetching: state.auth.isFetching,
   }
 }
 
