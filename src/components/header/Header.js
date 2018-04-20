@@ -43,10 +43,11 @@ class Header extends Component {
     const { 
       isAuthenticated, 
       user, 
-      url, 
+      url,
+      name,
       history,
     } = this.props;
-
+    
     let defaultImg = url === null ? "/profile.jpg" : url;
 
     return (
@@ -64,7 +65,7 @@ class Header extends Component {
             null 
           }
           <div className="profile__container_right">
-            { user ? <p><Link to="/profile">{user}</Link></p> : null }
+            { isAuthenticated ? <p><Link to="/profile">{name}</Link></p> : null }
             { !isAuthenticated ? 
               <NavLink to="/login">Innskráning</NavLink> 
               : 
@@ -80,6 +81,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
+    name: state.auth.name,
     url: state.upload.url,
     message: state.upload.message,
   }

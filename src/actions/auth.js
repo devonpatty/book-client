@@ -10,6 +10,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_LOGOUT = 'LOGIN_LOGOUT';
+export const UPDATE_NAME = 'UPDATE_NAME';
 
 function requestLogin() {
   return {
@@ -21,12 +22,13 @@ function requestLogin() {
 
 /* todo fleiri action */
 
-function receiveLogin(user, token) {
+function receiveLogin(user, token, name) {
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user,
+    name,
     token,
     message: null,
   }
@@ -48,9 +50,16 @@ function logout() {
     isAuthenticated: false,
     user: null,
     token: null,
+    name: null,
   }
 }
 
+function nameUpdate(name) {
+  return {
+    type: UPDATE_NAME,
+    name,
+  }
+}
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
 
 export const loginUser = (username, password) => {
@@ -69,10 +78,11 @@ export const loginUser = (username, password) => {
     } 
 
     if (login.loggedIn) {
-      const { user, token } = login;
+      const { user, token, name } = login;
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', JSON.stringify(token));
-      dispatch(receiveLogin(user, token));
+      localStorage.setItem('name', JSON.stringify(name));
+      dispatch(receiveLogin(user, token, name));
     }
   }
 }
@@ -82,6 +92,15 @@ export const logoutUser = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('picture');
+    localStorage.removeItem('name');
     dispatch(logout());
+  }
+}
+
+export const updateNameProfile = (name) => {
+  return async (dispatch) => {
+    localStorage.removeItem('name');
+    localStorage.setItem('name', JSON.stringify(name));
+    dispatch(nameUpdate(name));
   }
 }

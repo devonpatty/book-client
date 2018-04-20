@@ -30,8 +30,8 @@ function login(username, password) {
     .then((response) => {
       const user = username;
       const token = response.data.token;
-
-      return resolve({ loggedIn: true, user, token });
+      const name = response.data.name;
+      return resolve({ loggedIn: true, user, token, name });
     })
     .catch((err) => {
       if (err.response) {
@@ -79,7 +79,8 @@ function updateName(name) {
       headers: { Authorization: `Bearer ${parsedToken}` },
     })
     .then((response) => {
-      return resolve({ response });
+      const { name } = response.data;
+      return resolve({ name });
     })
     .catch((err) => {
       if (err) {
