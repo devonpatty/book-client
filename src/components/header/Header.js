@@ -35,8 +35,7 @@ class Header extends Component {
     if (isAuthenticated) {
       dispatch(getPic());
     } else {
-      dispatch(logoutUser());
-      history.push('/login?tokenExpired');
+
     }
   }
 

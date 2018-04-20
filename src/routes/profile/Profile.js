@@ -52,18 +52,35 @@ class Profile extends Component {
 
   handleUpdateName = async (e) => {
     e.preventDefault();
-    const { username, passwordCheck } = this.state;
+    const { username } = this.state;
     const { dispatch, history } = this.props;
 
     let updateUser;
     try {
-      updateUser = await api.updateName(username, passwordCheck);
+      updateUser = await api.updateName(username);
       if (updateUser.error) {
         dispatch(logoutUser());
         history.push('/login?tokenExpired');
       }
     } catch (error) {
       
+    }
+  }
+
+  handleUpdatePass = async (e) => {
+    e.preventDefault();
+    const { passwordCheck } = this.state;
+    const { dispatch, history } = this.props;
+
+    let updatePass;
+    try {
+      updatePass = await api.updatePass(passwordCheck);
+      if (updatePass.error) {
+        dispatch(logoutUser());
+        history.push('/login?tokenExpired');
+      }
+    } catch (error) {
+
     }
   }
 
@@ -134,7 +151,7 @@ class Profile extends Component {
           </form>
         </div>
         <div>
-          <form>
+          <form onSubmit={this.handleUpdatePass}>
             <label html="password">Lykilorð:</label>
             <input required type="password" id="password" name="password" value={password} onChange={this.handleInputChange} />
 
