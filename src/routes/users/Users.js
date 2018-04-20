@@ -49,16 +49,20 @@ class Users extends Component {
 
     return (
       <div>
-        { users && (users.map((user, i) =>
-          <Link key={user.username} className="book_title"
-            to={{
-              pathname: "/users/" + (i+1),
-              state: {id: (i+1)}
-              }}>
-            <h3 key={i}>{user.username}</h3>
-          </Link>
-        )) }
+        <h1 className="users_margin">Notendur</h1>
+        <div>
+          { users && (users.map((user, i) =>
+            <Link key={user.username} className="book_title"
+              to={{
+                pathname: "/users/" + (i+1),
+                state: {id: (i+1)}
+                }}>
+              <h3 className="users_margin" key={i}>{user.username}</h3>
+            </Link>
+          )) }
+        </div>
       </div>
+
     );
   }
 }
