@@ -1,74 +1,67 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-import { register, reset } from '../../actions/register';
+import { logoutUser } from '../../actions/auth';
+import api from '../../api';
 
 import './Users.css';
 
-const baseurl = process.env.REACT_APP_SERVICE_URL;
-
 class Users extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      data: null, 
-      loading: true, 
-      error: false,
-    };
-    this.getUsers = this.getUsers.bind(this);
+
+  state = {
+    users: null,
+    loading: true,
+    error: false,
   }
 
-  async componentDidMount() {
-    try {
-      const data = await this.fetchData();
-    } catch(err) {
-      console.error(err);
-      this.setState({ error: true, loading: false });
-    }
+  componentDidMount = async () => {
+    await this.getUsers();
   }
     
-  async fetchData() {
-    const token = window.localStorage.getItem('token');
-    const parsedToken = JSON.parse(token);
-    axios({
-        method: 'GET',
-        url: `${baseurl}users`,
-        headers: { Authorization: `Bearer ${parsedToken}` },
-      })
-      .then((response) => {
-        console.log(response.data);
-        this.setState({ data: response.data, loading: false});
-      })
-  }
-
-  getUsers(data) {
-    const cat = data.map((user) => 
-      <div>
-        <p>{user.username}</p>
-      </div>
-    )
-    return cat;
+  getUsers = async () => {
+    const { dispatch, history } = this.props;
+    
+    let users;
+    try {
+      users = await api.getUsers();
+      if (users.error) {
+        dispatch(logoutUser());
+        history.push('/login?tokenExpired');
+      } else {
+        const { data } = users;
+        this.setState({ users: data, loading: false });
+      }
+    } catch (error) {
+      this.setState({ loading: false, error: true });
+    }
   }
 
   render() {
-    const { data, loading, error } = this.state;
+    const { users, loading, error } = this.state;
 
     if (loading) {
-      return (<div>Hleð inn gögnum...</div>);
+      return (<p>Hleðum inn ...</p>);
     }
 
     if (error) {
-      return (<div>Villa við að sækja gögn</div>);
+      return (<p>Villa kom upp!!</p>);
     }
 
     return (
       <div>
-          { this.getUsers(data) }
+        { users && (users.map((user, i) => 
+          <p key={i}>{user.username}</p>
+        )) }
       </div>
     );
   }
 }
 
-export default Users;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  }
+}
+
+export default connect(mapStateToProps)(Users);
