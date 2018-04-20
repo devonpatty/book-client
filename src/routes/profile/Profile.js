@@ -5,7 +5,7 @@ import api from '../../api';
 import { connect } from 'react-redux';
 
 import { upload } from '../../actions/upload';
-import { logoutUser } from '../../actions/auth';
+import { logoutUser, updateNameProfile } from '../../actions/auth';
 
 import Button from "../../components/button/index";
 
@@ -61,6 +61,9 @@ class Profile extends Component {
       if (updateUser.error) {
         dispatch(logoutUser());
         history.push('/login?tokenExpired');
+      } else {
+        const { name } = updateUser;
+        dispatch(updateNameProfile(name));
       }
     } catch (error) {
       
