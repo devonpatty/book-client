@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import './Home.css';
+
 class Home extends Component {
 
   render() {
@@ -15,15 +17,15 @@ class Home extends Component {
 
     return (
       <div>
-        <h2>Velkomin á bókasafnið</h2>
+        <h2 className="home_header">Velkomin á bókasafnið</h2>
     
         { !isAuthenticated ? 
           <p>Til að njóta bókasafnsins til fullnustu mælum við með að <Link to="/login">skrá sig inn</Link>.
-          Þangað til getur þú skoðað
+          Þangað til getur þú skoðað 
           <Link to={{
             pathname:"/books",
             state: { title:  "https://djbook.herokuapp.com/books" }
-          }}>allar bækurnar</Link>.
+          }}> allar bækurnar</Link>.
           </p>
           :
           <p>Þú ert skráður notandi og getur því <Link to="/books">skráð bækur</Link> og breytt <Link to="/books">þeim sem til eru </Link>

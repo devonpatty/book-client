@@ -32,15 +32,17 @@ class Search extends Component {
   render() {
     const { search } = this.state;
     return (
-      <form >
-        <input
-          id="search" 
-          type="text" 
-          placeholder="Bókaleit" 
-          name="search" value={search} 
-          onChange={this.handleInputSearch} />
-        <button onClick={this.handleSubmitSearch}className="button header__button">Leita</button>
-      </form>
+      <div className="search_div">
+        <form>
+          <input
+            id="search" 
+            type="text" 
+            placeholder="Bókaleit" 
+            name="search" value={search} 
+            onChange={this.handleInputSearch} />
+          <button onClick={this.handleSubmitSearch}className="button header__button">Leita</button>
+        </form>
+      </div>
     );
   }
 }
