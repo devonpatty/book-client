@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 import './User.css';
-const baseurl = 'https://djbook.herokuapp.com';
+const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 class User extends Component {
   constructor(props) {
@@ -32,6 +32,7 @@ class User extends Component {
     const { i } = this.props.location.state;
     const token = window.localStorage.getItem('token');
     const parsedToken = JSON.parse(token);
+    console.log(typeof this.props.location.pathname);
     await axios.get(
       `${baseurl}${this.props.location.pathname}/read`,
       {
