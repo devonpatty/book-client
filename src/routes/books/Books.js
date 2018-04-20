@@ -55,7 +55,7 @@ class Books extends Component {
         <h2 className="books_title">Bókaleit: {query}</h2>
 
           { books && (books.data.items.map((book) => 
-            <div className="book_div" key={book.bookid}>
+            <div className="books_div" key={book.bookid}>
               <Link className="book_title"
                 to={{
                   pathname: "/books/" + book.bookid,
@@ -67,10 +67,16 @@ class Books extends Component {
               <span>Eftir {book.author}, gefin út {book.published}</span>
             </div>
           )) }
-        <div>
-          { changePage > 1 ? <button onClick={this.prevPage}>{`<`} Fyrri síða</button> : null }
-          <p>Síða {actualPage}</p>
-          { show ? <button onClick={this.nextPage}>Næsta síða {`>`}</button> : null }
+        <div className="button_flex">
+          <div>
+            { changePage > 1 ? <Button onClick={this.prevPage}>{`<`} Fyrri síða</Button> : null }
+          </div>
+          <div>
+            <p className="page_number">Síða {actualPage}</p>
+          </div>
+          <div>
+            { show ? <Button onClick={this.nextPage}>Næsta síða {`>`}</Button> : null }
+          </div>
         </div>
       </div>
     );
