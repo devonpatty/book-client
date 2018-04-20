@@ -54,6 +54,7 @@ class Book extends Component {
       if(book.category === cateid.cateid) {
         this.setState({category: cateid.name})
       }
+      return null;
     }) 
   }
 
@@ -63,8 +64,6 @@ class Book extends Component {
 
   addToRead() {
     this.setState({ edit: true});
-    const { edit } = this.state;
-    console.log(edit);
   }
 
   starReview(event) {
@@ -94,9 +93,11 @@ class Book extends Component {
     headers: { Authorization: `Bearer ${parsedToken}` },
   })
   .then((response) => {
-      alert("Tókst!");
+      alert("Skráning á lestri móttekin");
+      this.setState({ edit: false});
   }).catch((err) => {
-        alert(err);
+      alert(err);
+      this.setState({ edit: false});
     });
   }
 

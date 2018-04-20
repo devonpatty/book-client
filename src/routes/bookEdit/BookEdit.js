@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import axios from 'axios';
 
 import './BookEdit.css';
@@ -92,7 +90,6 @@ class BookEdit extends Component {
       <option key={category.cateid} value={category.cateid}> {category.name} </option>
     )
     return cat;
-
   }
 
   handleSubmit(event) {
@@ -150,7 +147,6 @@ class BookEdit extends Component {
 
     const {
       loading,
-        bookid,
         title,
         isbn13,
         author,
