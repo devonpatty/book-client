@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 
 import { upload } from '../../actions/upload';
 
+import Button from "../../components/button/index";
+
+import './Profile.css';
+
 class Profile extends Component {
 
   state = {
@@ -92,7 +96,7 @@ class Profile extends Component {
         <form encType="multipart/form-data" onSubmit={this.handleUploadPic}>
           <input required type="file" name="picture" accept="image/*" multiple={false} onChange={this.handleFileChanged}/>
           
-          <button>Uppfæra mynd</button>
+          <Button>Uppfæra mynd</Button>
         </form>
 
         <form onSubmit={this.handleUpdateName}>
