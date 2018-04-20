@@ -217,6 +217,29 @@ function deleteBook(id) {
   });
 }
 
+function getUsers() {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+
+    axios.get(
+      `${baseurl}users`,
+      {
+        headers: { Authorization: `Bearer ${parsedToken}` },
+      })
+      .then((response) => {
+        const { data } = response;
+        return resolve({ data });
+      })
+      .catch((err) => {
+        if (err.response) {
+          const { error } = err.response.data;
+          return resolve({ error });
+        }
+      });
+  });  
+}
+
 export default {
   get,
   login,
@@ -228,4 +251,5 @@ export default {
   searchHref,
   getMeRead,
   deleteBook,
+  getUsers,
 };
