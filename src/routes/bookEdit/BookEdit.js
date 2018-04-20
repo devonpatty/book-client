@@ -6,10 +6,13 @@ import './BookEdit.css';
 
 import Button from "../../components/button/index";
 
+const baseurl = process.env.REACT_APP_SERVICE_URL;
+
 class BookEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true, 
       id: this.props.location.state.book.bookid,
       title: this.props.location.state.book.title,
       isbn13: this.props.location.state.book.isbn13,
@@ -20,6 +23,7 @@ class BookEdit extends Component {
       published: this.props.location.state.book.published,
       pagecount: this.props.location.state.book.pagecount,
       language: this.props.location.state.book.language,
+      allCategories: {},
     };
 
     this.changeTitle = this.changeTitle.bind(this);
@@ -32,6 +36,25 @@ class BookEdit extends Component {
     this.changePagecount = this.changePagecount.bind(this);
     this.changeLanguage = this.changeLanguage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getCategories = this.getCategories.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  async componentDidMount() {
+    try {
+      const data = await this.fetchData();
+      this.setState({ loading: false, allCategories: data});
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  async fetchData() {
+    const response = await axios.get(
+      `${baseurl}categories`,
+    )
+    return response;
+    
   }
 
   changeTitle(event) {
@@ -62,8 +85,18 @@ class BookEdit extends Component {
     this.setState({language: event.target.value});
   }
 
+  getCategories(categories) {
+    const cat = categories.data.map((category) => 
+      <option key={category.cateid} value={category.cateid}> {category.name} </option>
+    )
+    return cat;
+  }
+
   handleSubmit(event) {
-    const URL = 'https://djbook.herokuapp.com/books/:id'
+    const { book } = this.props.location.state;
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+    
     const {
       bookid,
       title,
@@ -75,8 +108,12 @@ class BookEdit extends Component {
       published,
       pagecount,
       language,
-  } = this.state
-    axios.patch(URL , {
+  } = this.state;
+
+  axios({
+    method: 'PATCH',
+    url: `${baseurl}books/${book.bookid}`,
+    data: {
       bookid,
       title,
       isbn13,
@@ -87,16 +124,29 @@ class BookEdit extends Component {
       published,
       pagecount,
       language,
-    }).then((response) => {
-      alert('A Patch update was submitted: ' + response);
-      event.preventDefault();
-    })
+    },
+    headers: { Authorization: `Bearer ${parsedToken}` },
+  })
+  .then((response) => {
+    alert("Bók hefur verið breytt");
+    this.props.history.push('/books');
+  })
+  .catch((err) => {
+    if (err.response) {
+      alert(err.response.data.error);
+    }
+  });
 
   }
 
+  onClick() {
+    this.props.history.push('/books');
+  }
+
   render() {
+
     const {
-        bookid,
+      loading,
         title,
         isbn13,
         author,
@@ -106,13 +156,16 @@ class BookEdit extends Component {
         published,
         pagecount,
         language,
+        allCategories,
     } = this.state
 
-    const path = 'https://vefforritun2-2018-v4-synilausn.herokuapp.com/'+bookid;
+    if (loading) {
+      return (<div>Hleð inn gögnum...</div>);
+    }
+
     return (
       <div>
         <h2 className="margin_div">Breyta Bók</h2>
-        {/*<form method='PATCH' action={path}>*/}
         <div className="change_div">
           <form>
             <div className="margin_div">
@@ -151,7 +204,9 @@ class BookEdit extends Component {
                   Flokkur:  
                 </div>
                 <div>
-                  <input type='text' value={category} onChange={this.changeCategory}/>  
+                  <select name="category" value={category} onChange={this.changeCategory}>
+                    { this.getCategories(allCategories) }
+                  </select>
                 </div>
               </label>
             </div>
@@ -209,7 +264,12 @@ class BookEdit extends Component {
           <Button className="btn_save" onClick={this.handleSubmit}>Vista</Button>
         </div>
         <div>
-          <Button>Til baka</Button>
+          <button>
+            <Link to={{
+              pathname:`/books/${ this.props.location.state.book.bookid}`,
+              state: { book:  this.props.location.state.book }
+            }}> Til baka! </Link>
+          </button>
         </div>
       </div>
     );

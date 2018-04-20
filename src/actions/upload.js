@@ -38,11 +38,12 @@ export const upload = (file) => {
       return dispatch(uploadError(err));
     }
     
-    if (upload) {
+    if (upload.error) {
+      dispatch(uploadError(upload.error));
+    } else {
       const { secure_url } = upload;
       localStorage.setItem('picture', JSON.stringify(secure_url));
       dispatch(receiveUrl(file));
-      window.location.reload();
     }
   }
 }
@@ -58,7 +59,9 @@ export const getPic = () => {
       return dispatch(uploadError(err));
     }
 
-    if(picture) {
+    if (picture.error) {
+      dispatch(uploadError(picture.error));
+    } else {
       const { url } = picture;
       localStorage.setItem('picture', JSON.stringify(url));
       dispatch(receiveUrl(url));
