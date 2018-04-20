@@ -52,9 +52,11 @@ class Header extends Component {
 
     return (
       <header className="header">
-        <h1 className="header__heading">
-          <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
-        </h1>
+        <div className="heading_div">
+          <h1 className="header__heading">
+            <NavLink to="/" className="header__homepage">Bókasafnið</NavLink>
+          </h1>
+        </div>
 
         <Search history={history} onSubmit={this.searchBook} />
 
