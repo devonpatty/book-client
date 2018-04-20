@@ -3,17 +3,20 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_LOGOUT,
+  UPDATE_NAME,
   /* todo fleiri actions */
 } from '../actions/auth';
 
 const user = JSON.parse(localStorage.getItem('user') || 'null');
 const token = JSON.parse(localStorage.getItem('token') || 'null');
+const name = JSON.parse(localStorage.getItem('name') || 'null');
 
 const initialState = {
   isFetching: false,
   isAuthenticated: user ? true : false,
   user,
   token,
+  name,
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +36,7 @@ export default (state = initialState, action) => {
         isAuthenticated: action.isAuthenticated,
         user: action.user,
         token: action.token,
+        name: action.name,
         message: action.message,
       }
     case LOGIN_FAILURE:
@@ -49,6 +53,13 @@ export default (state = initialState, action) => {
         isAuthenticated: action.isAuthenticated,
         user: action.user,
         token: action.token,
+        name: action.name,
+      }
+    case UPDATE_NAME:
+    console.log(action);
+      return {
+        ...state,
+        name: action.name,
       }
     default:
       return state;

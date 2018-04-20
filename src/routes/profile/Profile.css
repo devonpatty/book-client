@@ -1,0 +1,23 @@
+.edit_user_div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    
+}
+
+.edit_user {
+    max-width: 500px;
+}
+
+.edit_input_user {
+    width: 320px;
+    height: 30px;
+}
+
+.edit_user_margin {
+    margin-bottom: 40px;
+}
+
+.edit_user_heading {
+    margin-bottom: 20px;
+}
