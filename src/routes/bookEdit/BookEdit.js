@@ -267,7 +267,7 @@ class BookEdit extends Component {
             <Link to={{
               pathname:`/books/${ this.props.location.state.book.bookid}`,
               state: { book:  this.props.location.state.book }
-            }}> Til baka! </Link>
+            }} className="back_link"> Til baka </Link>
           </Button>
         </div>
       </div>
