@@ -83,10 +83,8 @@ function updateName(name, password) {
       return resolve({ response });
     })
     .catch((err) => {
-      if (err.response) {
-        const {
-          error,
-        } = err.response.data;
+      if (err) {
+        const { error } = err.response.data;
         return resolve({ error });
       }
     });
@@ -110,9 +108,7 @@ function updatePicture(pic) {
     })
     .catch((err) => {
       if (err.response) {
-        const {
-          error,
-        } = err.response.data;
+        const { error } = err.response.data;
         return resolve({ error });
       }
     });
@@ -134,8 +130,11 @@ function getMe() {
       const { url } = response.data;
       return resolve({ url });
     })
-    .catch((error) => {
-      return resolve({ error });
+    .catch((err) => {
+      if (err.response) {
+        const { error } = err.response.data;
+        return resolve({ error });
+      }
     });
   });
 }
@@ -147,8 +146,11 @@ function search(title) {
       const { data } = response;
       return resolve({ data });
     })
-    .catch((error) => {
-      return resolve({ error });
+    .catch((err) => {
+      if (err.response) {
+        const { error } = err.response.data;
+        return resolve({ error });
+      }
     });
   });
 }
@@ -160,8 +162,11 @@ function searchHref(url) {
       const { data } = response;
       return resolve({ data });
     })
-    .catch((error) => {
-      return resolve({ error });
+    .catch((err) => {
+      if (err.response) {
+        const { error } = err.response.data;
+        return resolve({ error });
+      }
     });
   });
 }
@@ -181,8 +186,11 @@ function getMeRead() {
       const { data } = response;
       return resolve({ data });
     })
-    .catch((error) => {
-      return resolve({ error});
+    .catch((err) => {
+      if (err.response) {
+        const { error } = err.response.data;
+        return resolve({ error });
+      }
     });
   });
 }
@@ -200,8 +208,11 @@ function deleteBook(id) {
     .then((response) => {
       return resolve({ response });
     })
-    .catch((error) => {
-      return resolve({ error });
+    .catch((err) => {
+      if (err.response) {
+        const { error } = err.response.data;
+        return resolve({ error });
+      }
     });
   });
 }

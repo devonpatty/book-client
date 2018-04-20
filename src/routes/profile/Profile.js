@@ -5,6 +5,7 @@ import api from '../../api';
 import { connect } from 'react-redux';
 
 import { upload } from '../../actions/upload';
+import { logoutUser } from '../../actions/auth';
 
 class Profile extends Component {
 
@@ -17,15 +18,24 @@ class Profile extends Component {
   }
 
   componentDidMount = async () => {
+    await this.setData();
+  }
+
+  setData = async () => {
     let readBooks;
+    const { dispatch, history } = this.props;
     try {
       readBooks = await api.getMeRead();
-      const { data } = readBooks;
-      this.setState({ readBooks: data });
+      if (readBooks.error) {
+        dispatch(logoutUser());
+        history.push('/login?tokenExpired');
+      } else {
+        const { data } = readBooks;
+        this.setState({ readBooks: data });
+      }
     } catch (error) {
-      console.log(error);
+    
     }
-
   }
 
   handleInputChange = (e) => {
@@ -39,10 +49,15 @@ class Profile extends Component {
   handleUpdateName = async (e) => {
     e.preventDefault();
     const { username, passwordCheck } = this.state;
-    
+    const { dispatch, history } = this.props;
+
     let updateUser;
     try {
       updateUser = await api.updateName(username, passwordCheck);
+      if (updateUser.error) {
+        dispatch(logoutUser());
+        history.push('/login?tokenExpired');
+      }
     } catch (error) {
       
     }
@@ -52,13 +67,18 @@ class Profile extends Component {
     e.preventDefault();
 
     const { picUrl } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, history, message } = this.props;
 
     const formData = new FormData();
     formData.append('file', picUrl.name);
     formData.append('url', picUrl);
-
-    dispatch(upload(formData));
+    console.log(message);
+    if (message) {
+      dispatch(logoutUser());
+      history.push('/login?tokenExpired');
+    } else {
+      dispatch(upload(formData));
+    }
   }
 
   handleFileChanged = (e) => {
@@ -68,16 +88,22 @@ class Profile extends Component {
   }
 
   handleDelete = async (bookId, book) => {
+    const { dispatch, history } = this.props;
+
     let del;
     try {
       del = await api.deleteBook(bookId);
+      if (del.error) {
+        dispatch(logoutUser());
+        history.push('/login?tokenExpired');
+      } else {
+        const newReadBooks = this.state.readBooks.filter((item) => {
+          return item != book;
+        });
+        this.setState({ readBooks: newReadBooks });
+      }
     } catch (error) {
-      console.log(error);
-    } finally {
-      const newReadBooks = this.state.readBooks.filter((item) => {
-        return item != book;
-      });
-      this.setState({ readBooks: newReadBooks });
+      
     }
   }
 
@@ -122,6 +148,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => {
   return {
     isUploading: state.upload.isUploading,
+    message: state.upload.message,
   }
 }
 

@@ -5,7 +5,7 @@ class ReadBooks extends Component {
 
   render() {
     const { books, handleDelete } = this.props;
-    console.log(books);
+
     return (
       <ul>
         { books && (books.map((book, i) =>
