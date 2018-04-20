@@ -39,7 +39,6 @@ class Users extends Component {
 
   render() {
     const { users, loading, error } = this.state;
-
     if (loading) {
       return (<p>Hleðum inn ...</p>);
     }
@@ -50,8 +49,14 @@ class Users extends Component {
 
     return (
       <div>
-        { users && (users.map((user, i) => 
-          <p key={i}>{user.username}</p>
+        { users && (users.map((user, i) =>
+          <Link key={user.username} className="book_title"
+            to={{
+              pathname: "/users/" + (i+1),
+              state: {id: (i+1)}
+              }}>
+            <h3 key={i}>{user.username}</h3>
+          </Link>
         )) }
       </div>
     );
