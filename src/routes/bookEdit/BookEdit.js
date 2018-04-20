@@ -54,7 +54,6 @@ class BookEdit extends Component {
       `${baseurl}categories`,
     )
     return response;
-    
   }
 
   changeTitle(event) {
