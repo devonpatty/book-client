@@ -263,12 +263,12 @@ class BookEdit extends Component {
           <Button className="btn_save" onClick={this.handleSubmit}>Vista</Button>
         </div>
         <div>
-          <button>
+          <Button>
             <Link to={{
               pathname:`/books/${ this.props.location.state.book.bookid}`,
               state: { book:  this.props.location.state.book }
             }}> Til baka! </Link>
-          </button>
+          </Button>
         </div>
       </div>
     );
