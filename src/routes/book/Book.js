@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import './Book.css';
 
@@ -108,6 +109,8 @@ class Book extends Component {
   render() {
     const { book } = this.props.location.state;
     const { category, edit, star, review } = this.state;
+    const { isAuthenticated } = this.props;
+
     return (
       <div>
         <div className="book_div">
@@ -119,43 +122,48 @@ class Book extends Component {
           <p> {book.pagecount} síður</p>
           <p> Gefin út {book.published}</p>
           <p> Tungumál: {book.language} </p>
-          <Link to={{
+          {isAuthenticated ? <Link to={{
             pathname: '/books/'+book.bookid+'/edit',
             state: { book: book}
-          }}>Breyta bók! </Link>
+          }}>Breyta bók! </Link> : null }
         </div>
         <div>
-        {!edit ? 
+        { isAuthenticated ? 
+          (!edit ? 
           <Button className="read_book" onClick={this.addToRead}> Lesin bók </Button> :
           <div>
-            <form>
-              <div className="read_book_margin">
-                <label>Um bók:
-                  <div>
-                    <input className="about_book_input" type='text' value={review} onChange={this.textReview}/>
-                  </div>
-                </label>
-              </div>
-              <div className="read_book_margin">
-                <label> Einkunn:
-                  <div>
-                    <select className="book_grade" name="star" value={star} onChange={this.starReview}>
-                      <option key="1" value={1}> 1 </option>
-                      <option key="2" value={2}> 2 </option>
-                      <option key="3" value={3}> 3 </option>
-                      <option key="4" value={4}> 4 </option>
-                      <option key="5" value={5}> 5 </option>
-                    </select>
-                  </div>
-                </label>
-              </div>
-            </form>
+            <div>
+              <form>
+                <div className="read_book_margin">
+                  <label>Um bók:
+                    <div>
+                      <input className="about_book_input" type='text' value={review} onChange={this.textReview}/>
+                    </div>
+                  </label>
+                </div>
+                <div className="read_book_margin">
+                  <label> Einkunn:
+                    <div>
+                      <select className="book_grade" name="star" value={star} onChange={this.starReview}>
+                        <option key="1" value={1}> 1 </option>
+                        <option key="2" value={2}> 2 </option>
+                        <option key="3" value={3}> 3 </option>
+                        <option key="4" value={4}> 4 </option>
+                        <option key="5" value={5}> 5 </option>
+                      </select>
+                    </div>
+                  </label>
+                </div>
+              </form>
+            </div>
             <div className="read_btn_flex">
               <Button onClick={this.handleSubmit}>Vista</Button>
               <Button className="button_red" onClick={this.handleCancel}>Hætta við</Button>
             </div>
+          </div>
+          ) : null }
+            
           </div>} 
-        </div>
         <div>
           <Button onClick={this.onClick}>Til baka</Button>
         </div>
@@ -165,5 +173,12 @@ class Book extends Component {
     );
   }
 }
-export default Book;
+
+const mapToStateProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  }
+}
+
+export default connect(mapToStateProps)(Book);
   
