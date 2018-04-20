@@ -14,6 +14,20 @@ class Login extends Component {
     password: '',
   }
 
+  componentDidMount = () => {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
+      history.push('/');
+    }
+  }
+
+  componentWillUpdate = (prevProps) => {
+    const { history } = this.props;
+    if (prevProps.isAuthenticated !== this.props.isAuthenticated) {
+      history.push('/');
+    }
+  }
+
   handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -29,9 +43,6 @@ class Login extends Component {
     const { username, password } = this.state;
 
     dispatch(loginUser(username, password));
-    if (!message) {
-      history.push('/');
-    }
 
   }
 
