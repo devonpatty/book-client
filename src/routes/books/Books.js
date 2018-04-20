@@ -12,11 +12,6 @@ import './Books.css';
 
 class Books extends Component {
 
-  componentDidMount = () => {
-    const { dispatch, books } = this.props;
-    dispatch(searchBooks(''));
-  }
-
   nextPage = () => {
     const { books, query, dispatch, changePage, history } = this.props;
     const { links } = books.data;
