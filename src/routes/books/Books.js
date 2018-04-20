@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchBooks, goToHref } from '../../actions/search';
-import querystring from 'querystring';
+import querystring from 'query-string';
 
 import PropTypes from 'prop-types';
 
@@ -23,7 +23,9 @@ class Books extends Component {
 
     const nextAc = 'next';
     dispatch((goToHref(links.next.href, query, changePage, nextAc)));
-    history.push(this.queryString(query, changePage+1));
+
+    let url = this.queryEncode(query, changePage+1);
+    history.push(`/books?${url}`);
   }
 
   prevPage = () => {
@@ -32,12 +34,18 @@ class Books extends Component {
     
     const prevAc = 'prev';
     dispatch((goToHref(links.prev.href, query, changePage, prevAc)));
-    history.push(this.queryString(query, changePage-1));
+
+    let url = this.queryEncode(query, changePage-1);
+    history.goBack(`/books?${url}`);
   }
 
-  queryString = (query = '', page = 1) => {
-    const str = querystring.stringify({ search: query, page });
-    return `/books?${str}`;
+  queryEncode = (query, page = 1) => {
+    const order = ['search', 'page'];
+    const str = querystring.stringify(
+                  { search: query, page }, 
+                  { sort: (m, n) => order.indexOf(m) >= order.indexOf(n) },
+                );
+    return `${str}`;
   }
 
   render() {

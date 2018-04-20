@@ -27,16 +27,16 @@ class Header extends Component {
     const { dispatch } = this.props;
 
     this.searchValue = bookName.search;
-    const page = 1;
-    dispatch(searchBooks(this.searchValue, this.searchValue, page));
+    dispatch(searchBooks(this.searchValue));
   }
 
   componentDidUpdate = (prevProps) => {
-    const { dispatch, isAuthenticated } = this.props;
+    const { dispatch, isAuthenticated, history, message } = this.props;
     if (isAuthenticated) {
       dispatch(getPic());
     } else {
-      /*Do nothing*/
+      dispatch(logoutUser());
+      history.push('/login?tokenExpired');
     }
   }
 
@@ -82,6 +82,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     url: state.upload.url,
+    message: state.upload.message,
   }
 }
 
