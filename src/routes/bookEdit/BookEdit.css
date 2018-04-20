@@ -27,3 +27,8 @@ label {
 .btn_save {
     margin-bottom: 40px;
 }
+
+.back_link {
+    text-decoration: none;
+    color: #ffffff
+}
