@@ -65,7 +65,7 @@ function register(username, password, name) {
   });
 }
 
-function updateName(name, password) {
+function updateName(name) {
   return new Promise((resolve, reject) => {
     const token = window.localStorage.getItem('token');
     const parsedToken = JSON.parse(token);
@@ -75,6 +75,30 @@ function updateName(name, password) {
       url: `${baseurl}users/me`,
       data: {
         name,
+      },
+      headers: { Authorization: `Bearer ${parsedToken}` },
+    })
+    .then((response) => {
+      return resolve({ response });
+    })
+    .catch((err) => {
+      if (err) {
+        const { error } = err.response.data;
+        return resolve({ error });
+      }
+    });
+  });
+}
+
+function updatePass(password) {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('token');
+    const parsedToken = JSON.parse(token);
+
+    axios({
+      method: 'patch',
+      url: `${baseurl}users/me`,
+      data: {
         password,
       },
       headers: { Authorization: `Bearer ${parsedToken}` },
@@ -245,6 +269,7 @@ export default {
   login,
   register,
   updateName,
+  updatePass,
   updatePicture,
   getMe,
   search,
