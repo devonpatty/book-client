@@ -1,3 +1,9 @@
 .main__content {
     margin: 20px 200px;
 }
+
+@media (max-width: 700px) {
+    .main__content {
+        margin: 20px 15px;
+    }
+}
