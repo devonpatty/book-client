@@ -48,6 +48,14 @@ class Books extends Component {
     return `${str}`;
   }
 
+  getTitle(query) {
+    if (query === "") {
+      return<h2 className="books_title">Allar bækur</h2>
+    } else {
+      return <h2 className="books_title">Bókaleit: {query}</h2>
+    }
+  }
+
   render() {
     const { isSearching, isCompleted, books, query, changePage, resetPage, search, show } = this.props;
 
@@ -60,8 +68,7 @@ class Books extends Component {
     return (
       <div>
         {/* þarf að senda search key words hér*/}
-        <h2 className="books_title">Bókaleit: {query}</h2>
-
+        {this.getTitle(query)}
           { books && (books.data.items.map((book) => 
             <div className="books_div" key={book.bookid}>
               <Link className="book_title"
