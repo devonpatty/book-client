@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchBooks, goToHref } from '../../actions/search';
-import querystring from 'query-string';
+import querystring from 'querystring';
 
 import PropTypes from 'prop-types';
 
@@ -40,17 +40,13 @@ class Books extends Component {
   }
 
   queryEncode = (query, page = 1) => {
-    const order = ['search', 'page'];
-    const str = querystring.stringify(
-                  { search: query, page }, 
-                  { sort: (m, n) => order.indexOf(m) >= order.indexOf(n) },
-                );
+    const str = querystring.stringify({ search: query, page });
     return `${str}`;
   }
 
   getTitle(query) {
-    if (query === "") {
-      return<h2 className="books_title">Allar bækur</h2>
+    if (query === '') {
+      return <h2 className="books_title">Allar bækur</h2>
     } else {
       return <h2 className="books_title">Bókaleit: {query}</h2>
     }
