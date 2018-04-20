@@ -133,42 +133,53 @@ class Profile extends Component {
     const { username, password, passwordCheck, readBooks } = this.state;
 
     return (
-      <div>
-        <h2>Upplýsingar</h2>
-        <div>
+      <div className="edit_user">
+        <h1 className="edit_user_heading">Upplýsingar</h1>
+        <div className="edit_user_margin">
           <form encType="multipart/form-data" onSubmit={this.handleUploadPic}>
             <input required type="file" name="picture" accept="image/*" multiple={false} onChange={this.handleFileChanged}/>
             
             <Button>Uppfæra mynd</Button>
           </form>
         </div>
-        <div>
+        <div className="edit_user_margin">
           <form onSubmit={this.handleUpdateName}>
-            <label htmlFor="username">Nafn:</label>
-            <input required type="text" id="username" name="username" value={username} onChange={this.handleInputChange} />
-            
+            <div className="edit_user_div">
+              <div>
+                <label htmlFor="username">Nafn:</label>
+              </div>
+              <div>
+                <input required type="text" id="username" name="username" className="edit_input_user" value={username} onChange={this.handleInputChange} />
+              </div>             
+            </div>
             <Button>Uppfæra nafn</Button>
           </form>
         </div>
-        <div>
+        <div className="edit_user_margin">
           <form onSubmit={this.handleUpdatePass}>
-            <label html="password">Lykilorð:</label>
-            <input required type="password" id="password" name="password" value={password} onChange={this.handleInputChange} />
-
-            <label html="passwordCheck">Lykilorð, aftur:</label>
-            <input required type="password" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={this.handleInputChange} />
-            
+            <div className="edit_user_div">
+              <label html="password">Lykilorð:</label>
+              <input required type="password" id="password" name="password" className="edit_input_user" value={password} onChange={this.handleInputChange} />
+            </div>
+            <div className="edit_user_div">
+              <label html="passwordCheck">Lykilorð, aftur:</label>
+              <input required type="password" id="passwordCheck" name="passwordCheck" className="edit_input_user" value={passwordCheck} onChange={this.handleInputChange} />
+            </div>
             <Button>Uppfæra lykilorð</Button>
           </form>
         </div>
-        <div>
-          <h2>Lesnar bækur</h2>
-          { readBooks && (
-            <ReadBooks 
-              books={readBooks}
-              handleDelete={this.handleDelete.bind(this)}
-            />
-          )}
+        <div className="edit_user_margin">
+          <div className="edit_user_heading">
+            <h1>Lesnar bækur</h1>
+          </div>
+          <div>
+            { readBooks && (
+              <ReadBooks 
+                books={readBooks}
+                handleDelete={this.handleDelete.bind(this)}
+              />
+            )}
+          </div>
         </div>
       </div>
     );

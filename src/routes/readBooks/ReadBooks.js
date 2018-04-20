@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import Button from "../../components/button/index";
+
+import './ReadBooks.css';
 
 
 class ReadBooks extends Component {
@@ -9,11 +14,21 @@ class ReadBooks extends Component {
     return (
       <ul>
         { books && (books.map((book, i) =>
-          <li key={book.bookid}>
-            <p>{book.title}</p>
-            <p>Einkunn: {book.star}</p>
-            <p>{book.review}</p>
-            <button onClick={handleDelete.bind(this, book.bookid, book)}>Eyða</button>
+          <li key={book.bookid} className="read_book_margin">
+            <div className="read_books">
+              <Link
+                  to={{
+                    pathname: "/books/" + book.bookid,
+                    state: { book: book }
+                  }}
+                >
+                  <h3>{book.title}</h3>
+              </Link>
+            </div>
+            <div className="read_books">
+              <span>Einkunn: {book.star}. {book.review}</span>
+            </div>
+            <Button className="read_book_btn" onClick={handleDelete.bind(this, book.bookid, book)}>Eyða</Button>
           </li>
         ))}
       </ul>
