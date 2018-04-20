@@ -37,7 +37,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
             <Route exact path="/books" component={Books}/>
-            <Route path="/books/:id/edit" component={BookEdit}/>
+            <UserRoute path="/books/:id/edit" authenticated={isAuthenticated} component={BookEdit}/>
             <Route path="/books/:id/" component={Book}/>
             <Route path="/register" exact component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />

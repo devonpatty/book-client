@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import './Book.css';
 
@@ -108,6 +109,8 @@ class Book extends Component {
   render() {
     const { book } = this.props.location.state;
     const { category, edit, star, review } = this.state;
+    const { isAuthenticated } = this.props;
+
     return (
       <div>
         <div className="book_div">
@@ -119,13 +122,14 @@ class Book extends Component {
           <p> {book.pagecount} síður</p>
           <p> Gefin út {book.published}</p>
           <p> Tungumál: {book.language} </p>
-          <Link to={{
+          {isAuthenticated ? <Link to={{
             pathname: '/books/'+book.bookid+'/edit',
             state: { book: book}
-          }}>Breyta bók! </Link>
+          }}>Breyta bók! </Link> : null }
         </div>
         <div>
-        {!edit ? 
+        { isAuthenticated ? 
+        (!edit ? 
           <Button className="read_book" onClick={this.addToRead}> Lesin bók </Button> :
           <div>
             <form>
@@ -148,7 +152,7 @@ class Book extends Component {
             </form>
             <Button className="btn_save" onClick={this.handleSubmit}>Vista</Button>
             <Button className="btn_cancel" onClick={this.handleCancel}>Cancel</Button>
-          </div>} 
+          </div>) : null }
         </div>
         <div>
           <Button onClick={this.onClick}>Til baka</Button>
@@ -159,5 +163,12 @@ class Book extends Component {
     );
   }
 }
-export default Book;
+
+const mapToStateProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  }
+}
+
+export default connect(mapToStateProps)(Book);
   
