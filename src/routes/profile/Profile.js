@@ -72,19 +72,28 @@ class Profile extends Component {
 
   handleUpdatePass = async (e) => {
     e.preventDefault();
-    const { passwordCheck } = this.state;
+    const { passwordCheck, password } = this.state;
     const { dispatch, history } = this.props;
 
-    let updatePass;
-    try {
-      updatePass = await api.updatePass(passwordCheck);
-      if (updatePass.error) {
-        dispatch(logoutUser());
-        history.push('/login?tokenExpired');
-      }
-    } catch (error) {
+    const matchPass = password === passwordCheck;
 
+    let updatePass;
+
+    console.log(matchPass);
+    if (matchPass) {
+      try {
+        updatePass = await api.updatePass(passwordCheck);
+        if (updatePass.error) {
+          dispatch(logoutUser());
+          history.push('/login?tokenExpired');
+        }
+      } catch (error) {
+  
+      }
+    } else {
+      alert('Please match the match password!!!');
     }
+
   }
 
   handleUploadPic = async (e) => {
