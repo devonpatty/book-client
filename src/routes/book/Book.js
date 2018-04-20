@@ -161,15 +161,13 @@ class Book extends Component {
               <Button className="button_red" onClick={this.handleCancel}>Hætta við</Button>
             </div>
           </div>
-          ) : null }
-            
-          </div>} 
-        <div>
-          <Button onClick={this.onClick}>Til baka</Button>
+          ) : null 
+        }
         </div>
+      <div>
+        <Button onClick={this.onClick}>Til baka</Button>
       </div>
-
-      
+    </div>
     );
   }
 }
