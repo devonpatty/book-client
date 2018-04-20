@@ -1,7 +1,26 @@
 .book_div {
-    padding-bottom: 70px;;
+    padding-bottom: 70px;
 }
 
 .read_book {
     margin-bottom: 40px;
+}
+
+.about_book_input {
+    width: 550px;
+    height: 130px;
+}
+
+.read_book_margin {
+    margin-bottom: 15px;
+}
+
+.read_btn_flex {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.book_grade {
+    width: 100px;
 }

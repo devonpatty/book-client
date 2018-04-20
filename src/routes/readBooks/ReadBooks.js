@@ -28,7 +28,7 @@ class ReadBooks extends Component {
             <div className="read_books">
               <span>Einkunn: {book.star}. {book.review}</span>
             </div>
-            <Button className="read_book_btn" onClick={handleDelete.bind(this, book.bookid, book)}>Eyða</Button>
+            <Button className="button_red" onClick={handleDelete.bind(this, book.bookid, book)}>Eyða</Button>
           </li>
         ))}
       </ul>

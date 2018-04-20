@@ -129,25 +129,31 @@ class Book extends Component {
           <Button className="read_book" onClick={this.addToRead}> Lesin bók </Button> :
           <div>
             <form>
-              <div>
-                <label> Einkunn
-                  <select name="star" value={star} onChange={this.starReview}>
-                    <option key="1" value={1}> 1 </option>
-                    <option key="2" value={2}> 2 </option>
-                    <option key="3" value={3}> 3 </option>
-                    <option key="4" value={4}> 4 </option>
-                    <option key="5" value={5}> 5 </option>
-                  </select>
+              <div className="read_book_margin">
+                <label>Um bók:
+                  <div>
+                    <input className="about_book_input" type='text' value={review} onChange={this.textReview}/>
+                  </div>
                 </label>
               </div>
-              <div>
-                <label> Um bók
-                  <input className="book_edit_input" type='text' value={review} onChange={this.textReview}/>
+              <div className="read_book_margin">
+                <label> Einkunn:
+                  <div>
+                    <select className="book_grade" name="star" value={star} onChange={this.starReview}>
+                      <option key="1" value={1}> 1 </option>
+                      <option key="2" value={2}> 2 </option>
+                      <option key="3" value={3}> 3 </option>
+                      <option key="4" value={4}> 4 </option>
+                      <option key="5" value={5}> 5 </option>
+                    </select>
+                  </div>
                 </label>
               </div>
             </form>
-            <Button className="btn_save" onClick={this.handleSubmit}>Vista</Button>
-            <Button className="btn_cancel" onClick={this.handleCancel}>Cancel</Button>
+            <div className="read_btn_flex">
+              <Button onClick={this.handleSubmit}>Vista</Button>
+              <Button className="button_red" onClick={this.handleCancel}>Hætta við</Button>
+            </div>
           </div>} 
         </div>
         <div>
