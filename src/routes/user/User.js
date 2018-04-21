@@ -81,16 +81,23 @@ class User extends Component {
 
   render() {
     const { data, loading, error, errMessage } = this.state;
+    const { user } = this.props.location.username;
     if (loading) {
       return (<p>Hleðum inn ...</p>);
     }
 
     if (error) {
-      return (<p>{errMessage}</p>);
+      return (
+        <div>
+          <h3>{user}</h3>
+          <p>{errMessage}</p>
+        </div>
+      );
     }
 
     return (
       <div>
+        <h3>{user}</h3>
         {this.getBooks(data)}
       </div>
     );
