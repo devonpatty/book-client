@@ -55,7 +55,8 @@ class Users extends Component {
             <Link key={user.username} className="book_title"
               to={{
                 pathname: `/users/${user.id}`,
-                state: {id: user.id }
+                state: {id: user.id },
+                username: {user: user.username},
                 }}>
               <h3 className="users_margin" key={user.id}>{user.username}</h3>
             </Link>
