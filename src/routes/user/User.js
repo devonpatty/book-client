@@ -14,13 +14,12 @@ class User extends Component {
   constructor(props) {
     super(props);
 
-  this.state = {
-    data: null,
-    loading: true,
-    error: null,
-  }
-  this.getBooks = this.getBooks.bind(this);
-
+    this.state = {
+      data: null,
+      loading: true,
+      error: false,
+      errMessage: '', 
+    }
 
   }
 
@@ -29,52 +28,70 @@ class User extends Component {
   }
     
   async getUser() {
-    const { i } = this.props.location.state;
-    const token = window.localStorage.getItem('token');
-    const parsedToken = JSON.parse(token);
-    console.log(typeof this.props.location.pathname);
-    await axios.get(
-      `${baseurl}${this.props.location.pathname}/read`,
-      {
-        headers: { Authorization: `Bearer ${parsedToken}` },
-      },
-    )
-    .then((data) => {
-      console.log(data.data);
-      this.setState({data, loading: false})
-    })
-    .catch((error) => {
-      this.setState({error, loading: false});
-    });
+    let wow;
+    try {
+      wow = await this.getuser();
+      console.log(wow);
+      if (wow.data.hasOwnProperty('error')) {
+        this.setState({ loading: false, error: true, errMessage: wow.data.error });
+      } else {
+        this.setState({ data: wow, loading: false });
+      }
+    } catch (error) {
 
+    }
   }
 
-  getBooks(Books) {
-    const cat =Books.map((bookid, title, star, review, i) =>
+  getuser = () => {
+    return new Promise((resolve, reject) => {
+      const { id } = this.props.location.state;
+      const token = window.localStorage.getItem('token');
+      const parsedToken = JSON.parse(token);
+      axios.get(
+        `${baseurl}users/${id}/read`,
+        {
+          headers: { Authorization: `Bearer ${parsedToken}` },
+        },
+      )
+      .then((response) => {
+        const { data } = response;
+        return resolve({ data });
+      })
+      .catch((err) => {
+        if (err.response) {
+          const { error } = err.response.data;
+          return resolve({ error });
+        }
+      });
+    });
+  }
+
+  getBooks(books) {    
+    const cat = books.data.map((book, i) =>
       <div key={i}> 
-        <p>{bookid}</p>
-        <p>{title}</p>
-        <p>{star}</p>
-        <p>{review}</p> 
+        <p>{book.bookid}</p>
+        <p>{book.title}</p>
+        <p>{book.star}</p>
+        <p>{book.review}</p> 
       </div>
     )
     return cat;
+
   }
 
   render() {
-    const { data, loading, error } = this.state;
+    const { data, loading, error, errMessage } = this.state;
     if (loading) {
       return (<p>Hleðum inn ...</p>);
     }
 
     if (error) {
-      return (<p> Error </p>);
+      return (<p>{errMessage}</p>);
     }
-
 
     return (
       <div>
-        {this.getBooks(data.data)}
+        {this.getBooks(data)}
       </div>
     );
   }
