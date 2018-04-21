@@ -42,8 +42,8 @@ class App extends Component {
             <Route path="/books/:id/" component={Book}/>
             <Route path="/register" exact component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />
-            <UserRoute exact path="/users" authenticated={isAuthenticated} component={Users} />
             <UserRoute path="/users/:id" authenticated={isAuthenticated} component={User} />
+            <UserRoute exact path="/users" authenticated={isAuthenticated} component={Users} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>
